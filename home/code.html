@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - Home</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1b1a26",
+                    "primary": "#4a645a",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#b1cdc1",
+                    "on-tertiary-container": "#676674",
+                    "tertiary": "#5e5d6b",
+                    "on-tertiary-fixed-variant": "#464553",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f3f0f0",
+                    "surface-container": "#f0eded",
+                    "surface-bright": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "tertiary-container": "#e8e5f6",
+                    "secondary-fixed": "#f2dfd7",
+                    "on-secondary-container": "#6e605a",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b1cdc1",
+                    "surface-container-highest": "#e4e2e1",
+                    "outline": "#727975",
+                    "secondary-fixed-dim": "#d5c3bb",
+                    "tertiary-fixed": "#e3e0f1",
+                    "surface-container-high": "#eae7e7",
+                    "secondary": "#6a5b55",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#dcd9d9",
+                    "primary-fixed": "#cde9dd",
+                    "on-surface-variant": "#424845",
+                    "on-primary-container": "#536c63",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#334c43",
+                    "outline-variant": "#c2c8c4",
+                    "surface-tint": "#4a645a",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1b1c1c",
+                    "surface-container-low": "#f6f3f2",
+                    "primary-container": "#d1ede1",
+                    "secondary-container": "#efdcd4",
+                    "inverse-surface": "#303030",
+                    "tertiary-fixed-dim": "#c7c5d5",
+                    "on-secondary-fixed-variant": "#51443e",
+                    "surface-variant": "#e4e2e1",
+                    "surface": "#fcf9f8",
+                    "on-primary-fixed": "#062019",
+                    "on-secondary-fixed": "#231915"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "gutter": "16px",
+                    "stack-lg": "40px",
+                    "stack-sm": "12px",
+                    "container-padding": "24px",
+                    "stack-md": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "caption": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md antialiased pb-[100px]">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md docked full-width border-b border-zinc-50 dark:border-zinc-900 flat no shadows bg-white dark:bg-zinc-950 text-emerald-600 dark:text-emerald-400 transition-opacity hover:opacity-70">
+<div class="flex items-center">
+<button class="active:scale-90 transition-transform mr-3">
+<span class="material-symbols-outlined text-zinc-900 dark:text-zinc-50 text-[24px]">arrow_back</span>
+</button>
+<h1 class="font-['Plus_Jakarta_Sans'] text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">CosmeCheck</h1>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant/30 flex-shrink-0 active:scale-90 transition-transform">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with glowing clear skin, natural lighting, soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_QbMl7Y4BkkvFP7kJwoDBAzz2zl13kLWMWnTET44qtxItAFSy2zXIq5wP9TBAK1ZzKGpLFu98GBIIcgdWLyhWURgsWUf8qVUI9IIxgMOOjUEAvB6CyBFKw2ZiBPQKwjixa1nvQFjjzkNKcNJuWi8gfUcq8sfoFuxMjorq81iHNouHdeJUldZwSEesb93LGXQz_cojsPSZcGCxP2BsUb96csVpBV7wHLtYezBRl_BMKCl33yISFVxVFcJheKN7WJeWi64pKvdMDboz"/>
+</div>
+</header>
+<main class="px-container-padding pt-stack-md">
+<!-- Hero Section -->
+<section class="mb-stack-lg animate-fade-in">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-stack-sm tracking-tight">Hello, Glow!</h2>
+<!-- Skin Profile Summary Card (Glassmorphism inspired) -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border border-outline-variant/20 relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-secondary-container/30 rounded-full blur-2xl"></div>
+<div class="flex items-center justify-between relative z-10">
+<div>
+<p class="font-caption text-caption text-on-surface-variant mb-1 uppercase tracking-wider">Current Status</p>
+<p class="font-body-md text-body-md text-on-surface">Your skin profile is set to</p>
+</div>
+<div class="bg-secondary-container/50 border border-secondary-container rounded-full px-3 py-1 flex items-center">
+<span class="font-label-md text-label-md text-on-secondary-container">Sensitive/Dry</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Action Button -->
+<section class="mb-stack-lg">
+<button class="w-full bg-primary-container text-on-primary-container rounded-full py-4 px-8 flex items-center justify-center shadow-[0px_4px_14px_rgba(0,0,0,0.05)] hover:bg-primary-fixed hover:-translate-y-0.5 transition-all duration-300 active:scale-95 border border-primary-fixed-dim/30">
+<span class="material-symbols-outlined mr-2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+<span class="font-label-md text-label-md text-[16px]">Scan Product</span>
+</button>
+</section>
+<!-- Recent Scans Section -->
+<section class="mb-stack-lg">
+<div class="flex items-center justify-between mb-stack-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">Recent Scans</h3>
+<button class="font-caption text-caption text-primary hover:opacity-70 transition-opacity">View All</button>
+</div>
+<!-- Horizontal Scroll Container -->
+<div class="flex overflow-x-auto gap-4 pb-4 snap-x hide-scrollbar -mx-container-padding px-container-padding">
+<!-- Product Card 1 -->
+<div class="min-w-[150px] w-[150px] bg-surface-container-lowest rounded-[16px] p-3 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] snap-start border border-outline-variant/10 flex flex-col hover:shadow-[0px_15px_35px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="w-full h-[120px] rounded-lg overflow-hidden mb-3 bg-surface-variant/50 relative">
+<img alt="Product photo" class="w-full h-full object-cover" data-alt="minimalist white skincare bottle with silver cap on pale pink background, soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB49qYqKL12dy16WW7ryF0jId4YeHeEEMX5XJa3qYRsTK38OWKyz8grecKyEyn1rXo6B1Q2IBRCrrJME_6VQCWe6XLNyjRKmmz9cii7kJQWLB4hK8cEUrdwA_Cr611NYjFZtSnTm-18k4xjZD-MRyRoXltXf5pksiGv96iV-VRvWem_XyBmlcuTQ3Z3BZyoWBQzwN9rO9KQaG-1igCib7YZNmlKVIxtk-VbOo8UAW--b0xhIZmKAp8ZKOoXjp2YJV0rap3ta32e3vk7"/>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-sm rounded-full p-1 border border-outline-variant/20">
+<span class="material-symbols-outlined text-[14px] text-primary">check_circle</span>
+</div>
+</div>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface line-clamp-2 leading-tight mb-1">Gentle Hydrating Cleanser</h4>
+</div>
+<div class="flex items-center mt-2">
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B] opacity-30" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="min-w-[150px] w-[150px] bg-surface-container-lowest rounded-[16px] p-3 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] snap-start border border-outline-variant/10 flex flex-col hover:shadow-[0px_15px_35px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="w-full h-[120px] rounded-lg overflow-hidden mb-3 bg-surface-variant/50 relative">
+<img alt="Product photo" class="w-full h-full object-cover" data-alt="amber glass serum dropper bottle on clean white marble surface, casting soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiz5htF8aXjuUKC6BvXkKyPkgz4GtyMBktJd0GuKR7wp7L3I4-LjVLmncrugPbDlwzTIz0NMD1kESLH0dTU3_h-A5a7kR6crd1gFXeYaNJm3il2386fpfe9R8QL6kHKynPNM-V9acxFNN0X0UIbvXaoQPgMl7pboSDXzLTbVEnRBAlmmrnWf9e4NAAJ9_k9W7WZJZcBzdJu0dPTInt1O6UcqKE63qFPBUjUswVYC-QxF5tbYVJLuh9Z6uaTi6u0N17rIZTAH-M5uuZ"/>
+<div class="absolute top-2 right-2 bg-error-container/90 backdrop-blur-sm rounded-full p-1 border border-error/20">
+<span class="material-symbols-outlined text-[14px] text-error">warning</span>
+</div>
+</div>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface line-clamp-2 leading-tight mb-1">Vitamin C Radiance Serum</h4>
+</div>
+<div class="flex items-center mt-2">
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B] opacity-30" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B] opacity-30" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="min-w-[150px] w-[150px] bg-surface-container-lowest rounded-[16px] p-3 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] snap-start border border-outline-variant/10 flex flex-col hover:shadow-[0px_15px_35px_rgba(0,0,0,0.06)] transition-shadow">
+<div class="w-full h-[120px] rounded-lg overflow-hidden mb-3 bg-surface-variant/50 relative">
+<div class="w-full h-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[32px]">image</span>
+</div>
+</div>
+<div class="flex-grow">
+<h4 class="font-label-md text-label-md text-on-surface line-clamp-2 leading-tight mb-1">Barrier Repair Cream</h4>
+</div>
+<div class="flex items-center mt-2">
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px] text-[#F59E0B]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Disclaimer -->
+<div class="text-center mt-stack-lg mb-4">
+<p class="font-caption text-caption text-outline/80">AI analysis is for general information only.</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl rounded-t-[32px] border-t border-zinc-100/50 dark:border-zinc-800/50 shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] text-emerald-600 dark:text-emerald-400 font-['Plus_Jakarta_Sans'] text-[11px] font-medium tracking-wide">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center w-16 text-emerald-600 dark:text-emerald-400 transition-colors duration-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 rounded-lg py-1 active:scale-95">
+<span class="material-symbols-outlined mb-1" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span>Home</span>
+</button>
+<!-- History -->
+<button class="flex flex-col items-center justify-center w-16 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all rounded-lg py-1 active:scale-95 duration-200">
+<span class="material-symbols-outlined mb-1">history</span>
+<span>History</span>
+</button>
+<!-- Scan (FAB-like center) -->
+<button class="flex flex-col items-center justify-center w-16 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all rounded-lg py-1 active:scale-95 duration-200 relative -top-2">
+<div class="bg-primary-container text-on-primary-container rounded-full p-2 mb-1 shadow-sm border border-primary-fixed-dim/20">
+<span class="material-symbols-outlined">center_focus_strong</span>
+</div>
+<span>Scan</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center justify-center w-16 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all rounded-lg py-1 active:scale-95 duration-200">
+<span class="material-symbols-outlined mb-1">person</span>
+<span>Profile</span>
+</button>
+</nav>
+</body></html>

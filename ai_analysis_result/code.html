@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - Analysis Result</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#1b1a26",
+                      "primary": "#4a645a",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#b1cdc1",
+                      "on-tertiary-container": "#676674",
+                      "tertiary": "#5e5d6b",
+                      "on-tertiary-fixed-variant": "#464553",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#f3f0f0",
+                      "surface-container": "#f0eded",
+                      "surface-bright": "#fcf9f8",
+                      "background": "#fcf9f8",
+                      "tertiary-container": "#e8e5f6",
+                      "secondary-fixed": "#f2dfd7",
+                      "on-secondary-container": "#6e605a",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#b1cdc1",
+                      "surface-container-highest": "#e4e2e1",
+                      "outline": "#727975",
+                      "secondary-fixed-dim": "#d5c3bb",
+                      "tertiary-fixed": "#e3e0f1",
+                      "surface-container-high": "#eae7e7",
+                      "secondary": "#6a5b55",
+                      "error": "#ba1a1a",
+                      "surface-dim": "#dcd9d9",
+                      "primary-fixed": "#cde9dd",
+                      "on-surface-variant": "#424845",
+                      "on-primary-container": "#536c63",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#334c43",
+                      "outline-variant": "#c2c8c4",
+                      "surface-tint": "#4a645a",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#1b1c1c",
+                      "on-error-container": "#93000a",
+                      "on-background": "#1b1c1c",
+                      "surface-container-low": "#f6f3f2",
+                      "primary-container": "#d1ede1",
+                      "secondary-container": "#efdcd4",
+                      "inverse-surface": "#303030",
+                      "tertiary-fixed-dim": "#c7c5d5",
+                      "on-secondary-fixed-variant": "#51443e",
+                      "surface-variant": "#e4e2e1",
+                      "surface": "#fcf9f8",
+                      "on-primary-fixed": "#062019",
+                      "on-secondary-fixed": "#231915"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "gutter": "16px",
+                      "stack-lg": "40px",
+                      "stack-sm": "12px",
+                      "container-padding": "24px",
+                      "stack-md": "24px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "caption": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen font-body-md text-body-md antialiased pb-stack-lg selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared Component: TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md border-b border-zinc-50 dark:border-zinc-900 transition-opacity">
+<button aria-label="Go back" class="text-emerald-600 dark:text-emerald-400 hover:opacity-70 transition-opacity active:scale-90 transition-transform p-2 -ml-2">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="font-['Plus_Jakarta_Sans'] text-lg font-semibold text-zinc-900 dark:text-zinc-50 text-xl font-bold tracking-tight">
+            CosmeCheck
+        </div>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden flex items-center justify-center">
+<!-- Trailing Avatar Placeholder -->
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person">person</span>
+</div>
+</header>
+<main class="px-container-padding py-stack-md flex flex-col gap-stack-lg max-w-2xl mx-auto">
+<!-- Product Header -->
+<section class="flex flex-col items-center text-center gap-stack-sm">
+<div class="w-32 h-32 rounded-full overflow-hidden shadow-[0px_10px_30px_rgba(0,0,0,0.04)] bg-surface-container-lowest border-4 border-surface-container-lowest flex items-center justify-center relative">
+<img alt="Gentle Hydrating Cleanser Product" class="w-full h-full object-cover" data-alt="Minimalist frosted glass skincare bottle with soft pale green liquid inside, clean white background, soft diffused studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA0LaDtn4c-sqdT0xiujtl27dgDZrEPLb3ADVQUCm9o41dVAs6c8FWPRNtoP_LPfupYlxrENCiRcgSnrKM1PuWhWquHLt_zTFQttlfvwuEEeV_-cs5gHXJzg-MCgOY2xWkmgeo1hTxsIUh83h9DNIOwp2zatBvOztr1oWTUGXrFlb5I43lCUFdjUz_EduRBEtwOb0wKyVQ58x0WmVfjS2Q-vBtCwKjbpmHbL7VNE5lF4qF6t7cONkzqoCpsDgyTrHMluSVJ0i8NtTn"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Gentle Hydrating Cleanser</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Daily Foaming Wash</p>
+</div>
+</section>
+<!-- Overall Summary Card -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] flex flex-col gap-stack-sm relative overflow-hidden">
+<!-- Subtle pastel wash -->
+<div class="absolute inset-0 bg-primary-container opacity-10 pointer-events-none"></div>
+<div class="flex items-start justify-between relative z-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h2 class="font-label-md text-label-md text-on-surface">Safe for your skin type</h2>
+<p class="font-caption text-caption text-on-surface-variant">Matches your profile preferences</p>
+</div>
+</div>
+<div class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full font-caption text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    95% Match
+                </div>
+</div>
+</section>
+<!-- Ingredient Highlights (Bento Grid Style) -->
+<section class="flex flex-col gap-stack-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant px-1">Ingredient Analysis</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-sm">
+<!-- Hero Ingredients -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border border-primary-container/20">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="temp_preferences_eco">temp_preferences_eco</span>
+<h4 class="font-label-md text-label-md text-on-surface">Hero Ingredients</h4>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-primary-container/50 text-on-primary-container font-caption text-caption px-3 py-1.5 rounded-full flex items-center gap-1">
+                            Hyaluronic Acid
+                        </span>
+<span class="bg-primary-container/50 text-on-primary-container font-caption text-caption px-3 py-1.5 rounded-full flex items-center gap-1">
+                            Ceramides
+                        </span>
+<span class="bg-primary-container/50 text-on-primary-container font-caption text-caption px-3 py-1.5 rounded-full flex items-center gap-1">
+                            Glycerin
+                        </span>
+</div>
+</div>
+<!-- Caution Ingredients -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] border border-error-container/20">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<h4 class="font-label-md text-label-md text-on-surface">Caution</h4>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-error-container/50 text-on-error-container font-caption text-caption px-3 py-1.5 rounded-full flex items-center gap-1">
+                            Fragrance (Low)
+                        </span>
+<span class="bg-surface-container text-on-surface-variant font-caption text-caption px-3 py-1.5 rounded-full flex items-center gap-1">
+                            No harsh sulfates
+                        </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Suitable For -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+<h3 class="font-label-md text-label-md text-on-surface mb-4">Suitable For</h3>
+<div class="flex justify-around items-center text-center">
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+</div>
+<span class="font-caption text-caption text-on-surface">Oily</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shadow-sm border border-primary-container">
+<span class="material-symbols-outlined" data-icon="dry">dry</span>
+</div>
+<span class="font-caption text-caption text-primary">Dry</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="face">face</span>
+</div>
+<span class="font-caption text-caption text-on-surface">Sensitive</span>
+</div>
+</div>
+</section>
+<!-- Interaction Row -->
+<section class="flex items-center justify-between bg-surface-container-lowest rounded-xl p-4 shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+<div class="flex flex-col gap-1">
+<span class="font-caption text-caption text-on-surface-variant">Community Rating</span>
+<div class="flex text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px] text-surface-variant" data-icon="star_half" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-center text-on-surface-variant active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="thumb_up">thumb_up</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-center text-on-surface-variant active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="thumb_down">thumb_down</span>
+</button>
+</div>
+</section>
+<!-- Primary Action -->
+<section class="pt-4">
+<button class="w-full rounded-full bg-primary-container text-on-primary-container py-4 px-8 font-label-md text-label-md flex justify-center items-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all shadow-sm">
+<span class="material-symbols-outlined" data-icon="bookmark_add">bookmark_add</span>
+                Save to History
+            </button>
+</section>
+<!-- Disclaimer -->
+<section class="bg-surface-container rounded-xl p-4 text-center mt-auto">
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+                This analysis is generated by AI for general informational purposes only and does not constitute medical advice. Always patch test new products.
+            </p>
+</section>
+</main>
+</body></html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - Product Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#1b1a26",
+                        "primary": "#4a645a",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b1cdc1",
+                        "on-tertiary-container": "#676674",
+                        "tertiary": "#5e5d6b",
+                        "on-tertiary-fixed-variant": "#464553",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f3f0f0",
+                        "surface-container": "#f0eded",
+                        "surface-bright": "#fcf9f8",
+                        "background": "#fcf9f8",
+                        "tertiary-container": "#e8e5f6",
+                        "secondary-fixed": "#f2dfd7",
+                        "on-secondary-container": "#6e605a",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#b1cdc1",
+                        "surface-container-highest": "#e4e2e1",
+                        "outline": "#727975",
+                        "secondary-fixed-dim": "#d5c3bb",
+                        "tertiary-fixed": "#e3e0f1",
+                        "surface-container-high": "#eae7e7",
+                        "secondary": "#6a5b55",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dcd9d9",
+                        "primary-fixed": "#cde9dd",
+                        "on-surface-variant": "#424845",
+                        "on-primary-container": "#536c63",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#334c43",
+                        "outline-variant": "#c2c8c4",
+                        "surface-tint": "#4a645a",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1b1c1c",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-container": "#d1ede1",
+                        "secondary-container": "#efdcd4",
+                        "inverse-surface": "#303030",
+                        "tertiary-fixed-dim": "#c7c5d5",
+                        "on-secondary-fixed-variant": "#51443e",
+                        "surface-variant": "#e4e2e1",
+                        "surface": "#fcf9f8",
+                        "on-primary-fixed": "#062019",
+                        "on-secondary-fixed": "#231915"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "stack-lg": "40px",
+                        "stack-sm": "12px",
+                        "container-padding": "24px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "caption": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-md border-b border-surface-variant">
+<button aria-label="Go back" class="text-primary p-2 -ml-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface">CosmeCheck</h1>
+<div aria-label="User avatar" class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-on-tertiary-container icon-fill" data-icon="person">person</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-container-padding py-stack-md flex flex-col gap-stack-lg pb-32">
+<!-- Product Hero Section -->
+<section class="flex flex-col gap-stack-md">
+<div class="w-full aspect-square rounded-2xl bg-surface-container overflow-hidden relative shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary-fixed to-surface-bright opacity-50"></div>
+<img alt="Product Image" class="w-full h-full object-cover relative z-10 mix-blend-multiply opacity-90" data-alt="minimalist glass jar of pale green face cream sitting on a smooth white marble surface with soft, diffused natural lighting and subtle shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3i3JFN9ggkNeBHFAhxBP8dXC3ev5kB0-1h7t5yjMYcsOXwK5aA1cu68NqqV4_Sfbm_pd2GbCMgDJ5Pn7dkQRov5U7aYCz-VU9Gda2IIguahyBSa0SPATZywqzKiS1cpmzpYbLm3l06FvFwd7EOx2JZ7ML0XTd2VL18oRrWM4GuUW7Dpy6Pi6zMT9_g-R5jUVPCDymITNzFHMiepVryFXuaxG9OJA4aKAcVTcnPTmBYDv1YdkIMbBQKt4c8GNLa9GZs0Q-g4muzqea"/>
+</div>
+<div class="flex justify-between items-start gap-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">Lumière Botanica</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Hydrating Cloud Cream</h2>
+</div>
+<button class="flex items-center justify-center w-12 h-12 rounded-full bg-surface-container-lowest shadow-[0px_10px_30px_rgba(0,0,0,0.04)] text-primary hover:bg-surface-container transition-colors shrink-0">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+</div>
+<!-- Overall Safety Score -->
+<div class="bg-primary-container rounded-xl p-4 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm">
+<span class="font-headline-md text-headline-md text-primary">92</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-primary-container">Excellent Safety Profile</h3>
+<p class="font-body-md text-body-md text-on-primary-container opacity-80">Formulated with gentle, non-comedogenic ingredients.</p>
+</div>
+</div>
+</section>
+<!-- Best For Section -->
+<section class="flex flex-col gap-stack-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">Best For</h3>
+<div class="flex flex-wrap gap-unit">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-label-md text-label-md opacity-90">Dry Skin</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-label-md text-label-md opacity-90">Redness</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-4 py-2 rounded-full font-label-md text-label-md opacity-90">Barrier Repair</span>
+</div>
+</section>
+<!-- How to Use Section -->
+<section class="flex flex-col gap-stack-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">How to Use</h3>
+<div class="bg-surface-container-lowest rounded-2xl p-container-padding shadow-[0px_10px_30px_rgba(0,0,0,0.04)] text-on-surface-variant font-body-md text-body-md leading-relaxed border border-surface-variant/30">
+                Apply a dime-sized amount to clean, dry skin morning and night. Massage gently in upward circular motions until fully absorbed. For best results, use after your preferred hydrating serum.
+            </div>
+</section>
+<!-- Ingredients Deep Dive -->
+<section class="flex flex-col gap-stack-sm">
+<div class="flex justify-between items-end mb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface">Ingredients Analysis</h3>
+<span class="font-caption text-caption text-outline">18 Ingredients</span>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl shadow-[0px_10px_30px_rgba(0,0,0,0.04)] overflow-hidden border border-surface-variant/30">
+<!-- Legend -->
+<div class="flex gap-4 px-container-padding py-4 border-b border-surface-variant/50 bg-surface-container/20">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-primary"></div>
+<span class="font-caption text-caption text-on-surface-variant">Safe</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary"></div>
+<span class="font-caption text-caption text-on-surface-variant">Moderate</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-error"></div>
+<span class="font-caption text-caption text-on-surface-variant">High Risk</span>
+</div>
+</div>
+<!-- List -->
+<div class="flex flex-col">
+<!-- Item (Safe) -->
+<div class="flex items-start gap-4 px-container-padding py-stack-md border-b border-surface-variant/30 last:border-0">
+<div class="w-3 h-3 rounded-full bg-primary mt-1.5 shrink-0 shadow-sm"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Water (Aqua)</h4>
+<span class="font-caption text-caption text-outline">Solvent</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-sm">Base ingredient, completely safe and hydrating.</p>
+</div>
+</div>
+<!-- Item (Safe) -->
+<div class="flex items-start gap-4 px-container-padding py-stack-md border-b border-surface-variant/30 last:border-0">
+<div class="w-3 h-3 rounded-full bg-primary mt-1.5 shrink-0 shadow-sm"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Glycerin</h4>
+<span class="font-caption text-caption text-outline">Humectant</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-sm">Excellent natural moisturizer that draws water into the skin.</p>
+</div>
+</div>
+<!-- Item (Moderate) -->
+<div class="flex items-start gap-4 px-container-padding py-stack-md border-b border-surface-variant/30 last:border-0 bg-tertiary-container/10">
+<div class="w-3 h-3 rounded-full bg-tertiary mt-1.5 shrink-0 shadow-sm"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Phenoxyethanol</h4>
+<span class="font-caption text-caption text-outline">Preservative</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-sm">Generally safe at low concentrations (&lt;1%), but can cause irritation in highly sensitive skin.</p>
+</div>
+</div>
+<!-- Item (Safe) -->
+<div class="flex items-start gap-4 px-container-padding py-stack-md border-b border-surface-variant/30 last:border-0">
+<div class="w-3 h-3 rounded-full bg-primary mt-1.5 shrink-0 shadow-sm"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Ceramide NP</h4>
+<span class="font-caption text-caption text-outline">Emollient</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-sm">Crucial for maintaining the skin barrier and retaining moisture.</p>
+</div>
+</div>
+<!-- Item (High Risk) -->
+<div class="flex items-start gap-4 px-container-padding py-stack-md border-b border-surface-variant/30 last:border-0 bg-error-container/20">
+<div class="w-3 h-3 rounded-full bg-error mt-1.5 shrink-0 shadow-sm"></div>
+<div class="flex flex-col gap-1 w-full">
+<div class="flex justify-between items-start">
+<h4 class="font-label-md text-label-md text-on-surface">Fragrance (Parfum)</h4>
+<span class="font-caption text-caption text-outline text-error">Sensitizer</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-sm">Common cause of allergic contact dermatitis. Advisable to avoid for reactive skin types.</p>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-4 mt-2 font-label-md text-label-md text-primary flex items-center justify-center gap-2 hover:bg-surface-container rounded-xl transition-colors">
+                View All Ingredients
+                <span class="material-symbols-outlined text-[20px]" data-icon="expand_more">expand_more</span>
+</button>
+</section>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-8 right-6 bg-primary text-on-primary rounded-full px-6 py-4 shadow-[0px_10px_30px_rgba(74,100,90,0.3)] flex items-center gap-3 hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined icon-fill" data-icon="document_scanner">document_scanner</span>
+<span class="font-label-md text-label-md">Rescan</span>
+</button>
+</body></html>

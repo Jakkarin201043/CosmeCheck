@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - Scan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#1b1a26",
+                        "primary": "#4a645a",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b1cdc1",
+                        "on-tertiary-container": "#676674",
+                        "tertiary": "#5e5d6b",
+                        "on-tertiary-fixed-variant": "#464553",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f3f0f0",
+                        "surface-container": "#f0eded",
+                        "surface-bright": "#fcf9f8",
+                        "background": "#fcf9f8",
+                        "tertiary-container": "#e8e5f6",
+                        "secondary-fixed": "#f2dfd7",
+                        "on-secondary-container": "#6e605a",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#b1cdc1",
+                        "surface-container-highest": "#e4e2e1",
+                        "outline": "#727975",
+                        "secondary-fixed-dim": "#d5c3bb",
+                        "tertiary-fixed": "#e3e0f1",
+                        "surface-container-high": "#eae7e7",
+                        "secondary": "#6a5b55",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dcd9d9",
+                        "primary-fixed": "#cde9dd",
+                        "on-surface-variant": "#424845",
+                        "on-primary-container": "#536c63",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#334c43",
+                        "outline-variant": "#c2c8c4",
+                        "surface-tint": "#4a645a",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1b1c1c",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1b1c1c",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-container": "#d1ede1",
+                        "secondary-container": "#efdcd4",
+                        "inverse-surface": "#303030",
+                        "tertiary-fixed-dim": "#c7c5d5",
+                        "on-secondary-fixed-variant": "#51443e",
+                        "surface-variant": "#e4e2e1",
+                        "surface": "#fcf9f8",
+                        "on-primary-fixed": "#062019",
+                        "on-secondary-fixed": "#231915"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "16px",
+                        "stack-lg": "40px",
+                        "stack-sm": "12px",
+                        "container-padding": "24px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "caption": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface h-screen w-full overflow-hidden antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Camera Viewport Container -->
+<main class="relative h-full w-full flex flex-col bg-inverse-surface">
+<!-- Simulated Camera Feed Background -->
+<!-- In a real app, this would be the <video> element from the device camera -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center" data-alt="close up view of the back label of a minimalist white skincare bottle showing a dense list of ingredients in a bright clinical setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtZZzJCkjbJxnhXBXs1WJN8WumKJaN0uUSWVWD2SaMBp-42u8E_ySkjn1vD0GpS_Y4WbtQVDnO_f5ufBzEJgAoG9Ga5TQLPE-3hOKiEIBA-7NKfcsYNZXd-XVl7xsm5y3fPrqc2Q4m0PiJoZ9IIe17ssOT_aCxImx48Fhvyyek1QsUnOesJgyWcxl7mTky5q1uF0Wj6qhOxtnfdwv0WkIaB1Hcsg2pNvn1GbX_2ECYfbydc3-0p2Mmco6q5oDXgMO9NycYINFYi5-E');">
+</div>
+<!-- Very subtle dark wash to ensure UI elements pop against bright labels -->
+<div class="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none"></div>
+<!-- Top Controls Overlay -->
+<header class="absolute top-0 left-0 w-full z-20 flex justify-between items-start px-container-padding pt-container-padding pointer-events-auto">
+<!-- Close Action (Task-Focused Exit) -->
+<button aria-label="Close scanner" class="w-12 h-12 flex items-center justify-center rounded-full bg-surface/30 backdrop-blur-md text-on-secondary shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+<!-- Flash Toggle -->
+<button aria-label="Toggle flash" class="w-12 h-12 flex items-center justify-center rounded-full bg-surface/30 backdrop-blur-md text-on-secondary shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 0;">flash_off</span>
+</button>
+</header>
+<!-- Center Viewfinder Reticle -->
+<div class="flex-1 w-full flex items-center justify-center z-10 px-container-padding pointer-events-none">
+<div class="relative w-full max-w-sm aspect-[3/4] border border-on-secondary/30 rounded-[24px] shadow-[0_0_0_9999px_rgba(0,0,0,0.3)] backdrop-blur-[1px]">
+<!-- Corner Accents for targeting -->
+<div class="absolute top-0 left-0 w-10 h-10 border-t-4 border-l-4 border-primary rounded-tl-[24px] -ml-[2px] -mt-[2px]"></div>
+<div class="absolute top-0 right-0 w-10 h-10 border-t-4 border-r-4 border-primary rounded-tr-[24px] -mr-[2px] -mt-[2px]"></div>
+<div class="absolute bottom-0 left-0 w-10 h-10 border-b-4 border-l-4 border-primary rounded-bl-[24px] -ml-[2px] -mb-[2px]"></div>
+<div class="absolute bottom-0 right-0 w-10 h-10 border-b-4 border-r-4 border-primary rounded-br-[24px] -mr-[2px] -mb-[2px]"></div>
+<!-- Scanning line aesthetic -->
+<div class="absolute top-1/2 left-4 right-4 h-[1px] bg-primary/40 shadow-[0_0_8px_rgba(74,100,90,0.5)]"></div>
+</div>
+</div>
+<!-- Bottom Controls Panel (Scientific Softness Theme) -->
+<section class="relative z-20 w-full bg-surface/95 backdrop-blur-2xl rounded-t-[32px] shadow-[0px_-10px_30px_rgba(0,0,0,0.08)] pb-10 pt-stack-md px-container-padding flex flex-col items-center gap-stack-md pointer-events-auto">
+<!-- Contextual Instructions -->
+<div class="text-center max-w-[280px]">
+<p class="font-body-md text-body-md text-on-surface-variant">Take a clear photo of the ingredient label.</p>
+</div>
+<!-- Action Bar -->
+<div class="w-full flex items-center justify-between max-w-md mx-auto">
+<!-- Spacer for layout balance -->
+<div class="w-14 h-14"></div>
+<!-- Primary Shutter Button -->
+<button aria-label="Take Photo" class="relative group flex items-center justify-center w-20 h-20 rounded-full bg-surface-container-highest shadow-[0_4px_12px_rgba(0,0,0,0.05)] active:scale-95 transition-all duration-200">
+<!-- Outer Ring -->
+<div class="absolute inset-0 rounded-full border-4 border-surface-container-high group-active:border-primary-container transition-colors"></div>
+<!-- Inner Solid Button -->
+<div class="w-[60px] h-[60px] rounded-full bg-primary flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-on-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+</button>
+<!-- Secondary Upload Action -->
+<button aria-label="Upload Image" class="w-14 h-14 flex items-center justify-center rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 0;">image</span>
+</button>
+</div>
+<!-- Safe area bottom padding space -->
+<div class="h-safe"></div>
+</section>
+</main>
+</body></html>
