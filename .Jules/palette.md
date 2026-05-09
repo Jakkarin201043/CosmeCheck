@@ -1,0 +1,3 @@
+## 2026-05-09 - Login Form Accessibility
+**Learning:** In a heavily styled interface like this where form elements use multiple CSS classes (e.g., `ml-2`, rounded corners, relative positioning), screen readers often struggle if inputs aren't explicitly linked to labels via `id` and `for` attributes. Explicit `aria-label`s on icon-only buttons (like password toggles and social login) are critical for a screen reader to differentiate them.
+**Action:** Always link labels to their corresponding inputs with matching `for`/`id` pairs and ensure every icon-only button has an `aria-label` explaining its function.
