@@ -26,6 +26,10 @@ class RiskAnalyzer {
       knownIngredients: knownIngredients,
     );
     final cautionIngredients = _cautionIngredients(knownIngredients);
+    final unknownIngredients = _unknownIngredients(
+      detectedIngredients: detectedIngredients,
+      ingredientDatabase: ingredientDatabase,
+    );
     final riskScore = _riskScore(
       matchedAllergens: matchedAllergens,
       knownIngredients: knownIngredients,
@@ -40,6 +44,7 @@ class RiskAnalyzer {
       matchedAllergens: matchedAllergens,
       helpfulIngredients: helpfulIngredients,
       cautionIngredients: cautionIngredients,
+      unknownIngredients: unknownIngredients,
       riskScore: riskScore,
       status: _statusForScore(riskScore),
       createdAt: DateTime.now(),
@@ -101,6 +106,31 @@ class RiskAnalyzer {
         .toList();
     caution.sort();
     return caution;
+  }
+
+  static List<String> _unknownIngredients({
+    required List<String> detectedIngredients,
+    required List<Ingredient> ingredientDatabase,
+  }) {
+    final seen = <String>{};
+    final unknown = <String>[];
+
+    for (final ingredient in detectedIngredients) {
+      final normalized = IngredientParser.normalize(ingredient);
+      if (normalized.isEmpty || !seen.add(normalized)) {
+        continue;
+      }
+
+      final knownMatches = IngredientParser.matchKnownIngredients(
+        detectedIngredients: [ingredient],
+        database: ingredientDatabase,
+      );
+      if (knownMatches.isEmpty) {
+        unknown.add(ingredient);
+      }
+    }
+
+    return unknown;
   }
 
   static double _riskScore({

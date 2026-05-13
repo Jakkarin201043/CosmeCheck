@@ -7,6 +7,7 @@ class ScanResult {
     required this.matchedAllergens,
     required this.helpfulIngredients,
     required this.cautionIngredients,
+    required this.unknownIngredients,
     required this.riskScore,
     required this.status,
     required this.createdAt,
@@ -19,6 +20,7 @@ class ScanResult {
   final List<String> matchedAllergens;
   final List<String> helpfulIngredients;
   final List<String> cautionIngredients;
+  final List<String> unknownIngredients;
   final double riskScore;
   final String status;
   final DateTime createdAt;

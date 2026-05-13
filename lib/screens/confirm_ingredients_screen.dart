@@ -270,6 +270,9 @@ class _IngredientReviewTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final known = knownMatch != null;
     return Container(
+      key: ValueKey(
+        'ingredientReview-${IngredientParser.normalize(ingredient)}',
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: AppColors.card,
@@ -279,6 +282,11 @@ class _IngredientReviewTile extends StatelessWidget {
       child: Row(
         children: [
           Icon(
+            key: ValueKey(
+              known
+                  ? 'ingredientKnown-${IngredientParser.normalize(ingredient)}'
+                  : 'ingredientUnknown-${IngredientParser.normalize(ingredient)}',
+            ),
             known ? Icons.check_circle_outline : Icons.help_outline,
             color: known ? AppColors.safe : AppColors.textSecondary,
           ),

@@ -129,6 +129,14 @@ class ScanResultScreen extends StatelessWidget {
                       emptyText: 'ไม่พบสารที่ควรระวังจากฐานข้อมูลตัวอย่าง',
                       type: ChipType.caution,
                     ),
+                    const SizedBox(height: 20),
+                    _ChipSection(
+                      title: 'ส่วนผสมที่ยังไม่อยู่ในฐานข้อมูล',
+                      chips: result.unknownIngredients,
+                      emptyText:
+                          'ไม่มีส่วนผสมที่อยู่นอกฐานข้อมูลตัวอย่างในรายการนี้',
+                      type: ChipType.neutral,
+                    ),
                     const SizedBox(height: 24),
                     AppCard(
                       color: const Color(0xFFF1F7F8),

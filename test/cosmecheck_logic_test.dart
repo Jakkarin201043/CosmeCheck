@@ -85,6 +85,24 @@ void main() {
     expect(known.map((item) => item.name), contains('Fragrance'));
   });
 
+  test('matcher does not map generic Alcohol to Alcohol Denat', () {
+    final known = IngredientParser.matchKnownIngredients(
+      detectedIngredients: const ['Alcohol'],
+      database: IngredientDatabase.ingredients,
+    );
+
+    expect(known.map((item) => item.id), isNot(contains('alcohol-denat')));
+  });
+
+  test('matcher still maps explicit Alcohol Denat aliases', () {
+    final known = IngredientParser.matchKnownIngredients(
+      detectedIngredients: const ['SD Alcohol'],
+      database: IngredientDatabase.ingredients,
+    );
+
+    expect(known.map((item) => item.id), contains('alcohol-denat'));
+  });
+
   test('parser returns no ingredients for empty OCR text', () {
     expect(IngredientParser.parse('   \n  '), isEmpty);
   });
@@ -136,6 +154,24 @@ void main() {
     expect(result.detectedIngredients, isNot(contains('Water')));
     expect(result.matchedAllergens, contains('Fragrance'));
   });
+
+  test(
+    'risk analyzer reports unknown ingredients without raising cautions',
+    () {
+      final result = RiskAnalyzer.analyze(
+        ocrText: 'Water, Mystery Root Extract, Alcohol',
+        detectedIngredients: const ['Water', 'Mystery Root Extract', 'Alcohol'],
+        allergens: const ['Alcohol Denat.'],
+        skinType: 'เธเธดเธงเนเธเนเธเนเธฒเธข',
+        ingredientDatabase: IngredientDatabase.ingredients,
+      );
+
+      expect(result.unknownIngredients, contains('Mystery Root Extract'));
+      expect(result.unknownIngredients, contains('Alcohol'));
+      expect(result.matchedAllergens, isNot(contains('Alcohol Denat.')));
+      expect(result.cautionIngredients, isNot(contains('Alcohol Denat.')));
+    },
+  );
 
   test('allergy profile persists locally', () async {
     SharedPreferences.setMockInitialValues({});

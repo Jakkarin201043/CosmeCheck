@@ -161,4 +161,93 @@ void main() {
     expect(find.textContaining('/ 10'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('confirm ingredients keeps analyze disabled when list is empty', (
+    tester,
+  ) async {
+    await pumpCosmeCheck(tester, size: const Size(360, 640));
+
+    CosmeCheckApp.router.go('/home');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    CosmeCheckApp.router.go(
+      '/confirm-ingredients',
+      extra: const IngredientConfirmationDraft(
+        rawOcrText: 'Noise only',
+        parsedIngredients: [],
+        productName: 'Empty QA',
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    final analyzeButton = tester.widget<FilledButton>(
+      find.byKey(const Key('analyzeConfirmedIngredientsButton')),
+    );
+
+    expect(analyzeButton.onPressed, isNull);
+    expect(find.byKey(const Key('confirmedIngredientList')), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('confirm ingredients dedupes and carries unknowns to result', (
+    tester,
+  ) async {
+    await pumpCosmeCheck(tester, size: const Size(393, 873));
+
+    CosmeCheckApp.router.go('/home');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    CosmeCheckApp.router.go(
+      '/confirm-ingredients',
+      extra: const IngredientConfirmationDraft(
+        rawOcrText: 'Ingredients: Glycerin, glycerin, Mystery Root Extract',
+        parsedIngredients: ['Glycerin', 'glycerin', 'Mystery Root Extract'],
+        productName: 'Unknown QA',
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(
+      find.byKey(const ValueKey('ingredientReview-glycerin')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('ingredientReview-mystery root extract')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('ingredientUnknown-mystery root extract')),
+      findsOneWidget,
+    );
+
+    await tester.enterText(
+      find.byKey(const Key('addIngredientField')),
+      'Glycerin, Mystery Root Extract',
+    );
+    await tester.tap(find.byKey(const Key('addIngredientButton')));
+    await tester.pump();
+
+    expect(
+      find.byKey(const ValueKey('ingredientReview-glycerin')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('ingredientReview-mystery root extract')),
+      findsOneWidget,
+    );
+
+    await tester.tap(
+      find.byKey(const Key('analyzeConfirmedIngredientsButton')),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.textContaining('Mystery Root Extract'), findsWidgets);
+    expect(find.textContaining('/ 10'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }

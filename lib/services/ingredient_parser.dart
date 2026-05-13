@@ -94,13 +94,21 @@ class IngredientParser {
   }
 
   static List<String> _ingredientMatchTerms(Ingredient ingredient) {
-    return [
+    final terms = [
       ingredient.id,
       ingredient.name,
       ingredient.inciName,
       ingredient.thaiName,
       ...ingredient.aliases,
     ];
+
+    if (ingredient.id == 'alcohol-denat') {
+      return terms
+          .where((term) => normalize(term) != 'alcohol')
+          .toList(growable: false);
+    }
+
+    return terms;
   }
 
   static bool _isIngredientMatch({
