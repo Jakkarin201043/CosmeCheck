@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#002020",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#5dd9d8",
+                      "secondary-fixed-dim": "#abc7ff",
+                      "on-tertiary-container": "#172f4f",
+                      "inverse-on-surface": "#ecf2f1",
+                      "surface-container": "#e9efee",
+                      "on-primary-container": "#003535",
+                      "outline-variant": "#bcc9c8",
+                      "surface-tint": "#006a6a",
+                      "on-secondary-fixed-variant": "#00458e",
+                      "on-error": "#ffffff",
+                      "surface": "#f5fafa",
+                      "on-secondary-container": "#002959",
+                      "on-primary": "#ffffff",
+                      "primary-fixed-dim": "#5dd9d8",
+                      "inverse-surface": "#2c3231",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#314769",
+                      "surface-variant": "#dee4e3",
+                      "surface-container-high": "#e4e9e8",
+                      "secondary-container": "#448ffd",
+                      "primary": "#006a6a",
+                      "tertiary-fixed-dim": "#b1c7f0",
+                      "tertiary-fixed": "#d5e3ff",
+                      "secondary": "#005cba",
+                      "surface-container-highest": "#dee4e3",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#004f50",
+                      "surface-container-low": "#eff5f4",
+                      "secondary-fixed": "#d7e3ff",
+                      "on-surface-variant": "#3d4949",
+                      "outline": "#6d7a79",
+                      "on-background": "#171d1c",
+                      "tertiary-container": "#8197bd",
+                      "tertiary": "#495f82",
+                      "primary-container": "#10a7a7",
+                      "primary-fixed": "#7cf5f5",
+                      "on-surface": "#171d1c",
+                      "background": "#f5fafa",
+                      "surface-bright": "#f5fafa",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#001c3b",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#d5dbda",
+                      "on-secondary-fixed": "#001b3f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "12px",
+                      "xxl": "48px",
+                      "xs": "8px",
+                      "lg": "24px",
+                      "margin-mobile": "20px",
+                      "md": "16px",
+                      "xl": "32px",
+                      "gutter-mobile": "16px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "IBM Plex Sans Thai"
+                      ],
+                      "body-sm": [
+                              "IBM Plex Sans Thai"
+                      ],
+                      "body-lg": [
+                              "IBM Plex Sans Thai"
+                      ],
+                      "headline-xl": [
+                              "Manrope"
+                      ],
+                      "label-lg": [
+                              "IBM Plex Sans Thai"
+                      ],
+                      "headline-md": [
+                              "Manrope"
+                      ],
+                      "headline-lg": [
+                              "Manrope"
+                      ],
+                      "label-sm": [
+                              "IBM Plex Sans Thai"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col justify-between items-center overflow-x-hidden">
+<!-- Top Spacer for Status Bar (simulated) -->
+<div class="w-full h-12 flex-shrink-0"></div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center w-full max-w-md px-margin-mobile relative z-10">
+<!-- App Logo & Title Cluster -->
+<div class="flex flex-col items-center justify-center mb-xl text-center w-full">
+<!-- Iconic Logo Placeholder -->
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest shadow-[0px_4px_20px_rgba(11,37,69,0.05)] flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-primary-container text-5xl" style="font-variation-settings: 'FILL' 1;">
+                    search
+                </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary font-extrabold tracking-tight mb-xs">
+                CosmeCheck
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px]">
+                ผู้ช่วยส่วนตัวดูแลผิวและเช็คความเสี่ยงแพ้
+            </p>
+</div>
+<!-- Illustration -->
+<div class="w-full relative flex items-center justify-center mb-xxl mt-lg">
+<!-- Decorative background blob (simulated soft glow) -->
+<div class="absolute w-64 h-64 bg-primary-container/10 rounded-full blur-3xl -z-10"></div>
+<img alt="Soft skincare jar illustration" class="w-48 h-48 object-contain drop-shadow-[0px_8px_24px_rgba(11,37,69,0.1)] rounded-2xl" data-alt="A clean, minimalist 3D rendering of a premium, unbranded skincare cream jar floating gently in a serene studio environment. The jar is smooth, semi-translucent frosted glass with a matte white lid, bathed in soft, high-key ambient light that casts no harsh shadows. The background is a seamless, very pale cool blue (#F6FBFF) that perfectly matches the app's light-mode aesthetic, creating a sense of clinical safety, purity, and modern cosmetic science. Subtle reflections suggest a pristine, sterile surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXf3L3maKz3KezZNfxt6cEbXwAeNCXEydHFE1b_5ZWs4L_bLDM3q8NyZGLorRrV1_A62oBk41Qcx1X1rKOiNWNFAmKtRwh8_MTlhsaWoyFXgbcCetAhDG5FZ6qRPCcvGXOG-Rb1Do-sLYsjYktebNOqrSwavnKXWa3TDtt9XNuUNvhSwt70kgLhHUQR13C_KaOdcrOp7jrgyYgDkxbaeYyHC_Id9zisuUm1iBsLdZCyADMOLL6vsUYlPA90ZPMPSQ-vjM0Mzfb6o0"/>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<footer class="w-full max-w-md px-margin-mobile pb-xxl flex flex-col items-center relative z-10">
+<!-- Pagination Dots -->
+<div class="flex space-x-2 mb-lg">
+<div class="w-6 h-2 rounded-full bg-primary-container"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+</div>
+<!-- Primary Button -->
+<button class="w-full h-[56px] bg-primary-container hover:bg-primary-container/90 text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center transition-colors shadow-[0px_8px_24px_rgba(16,167,167,0.15)]">
+            เริ่มต้นใช้งาน
+        </button>
+</footer>
+</body></html>

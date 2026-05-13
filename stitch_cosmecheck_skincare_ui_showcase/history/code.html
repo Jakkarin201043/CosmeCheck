@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - ประวัติการสแกน</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#002020",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#5dd9d8",
+                        "secondary-fixed-dim": "#abc7ff",
+                        "on-tertiary-container": "#172f4f",
+                        "inverse-on-surface": "#ecf2f1",
+                        "surface-container": "#e9efee",
+                        "on-primary-container": "#003535",
+                        "outline-variant": "#bcc9c8",
+                        "surface-tint": "#006a6a",
+                        "on-secondary-fixed-variant": "#00458e",
+                        "on-error": "#ffffff",
+                        "surface": "#f5fafa",
+                        "on-secondary-container": "#002959",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#5dd9d8",
+                        "inverse-surface": "#2c3231",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#314769",
+                        "surface-variant": "#dee4e3",
+                        "surface-container-high": "#e4e9e8",
+                        "secondary-container": "#448ffd",
+                        "primary": "#006a6a",
+                        "tertiary-fixed-dim": "#b1c7f0",
+                        "tertiary-fixed": "#d5e3ff",
+                        "secondary": "#005cba",
+                        "surface-container-highest": "#dee4e3",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#004f50",
+                        "surface-container-low": "#eff5f4",
+                        "secondary-fixed": "#d7e3ff",
+                        "on-surface-variant": "#3d4949",
+                        "outline": "#6d7a79",
+                        "on-background": "#171d1c",
+                        "tertiary-container": "#8197bd",
+                        "tertiary": "#495f82",
+                        "primary-container": "#10a7a7",
+                        "primary-fixed": "#7cf5f5",
+                        "on-surface": "#171d1c",
+                        "background": "#f5fafa",
+                        "surface-bright": "#f5fafa",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#001c3b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d5dbda",
+                        "on-secondary-fixed": "#001b3f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xxl": "48px",
+                        "xs": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "gutter-mobile": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["IBM Plex Sans Thai"],
+                        "body-sm": ["IBM Plex Sans Thai"],
+                        "body-lg": ["IBM Plex Sans Thai"],
+                        "headline-xl": ["Manrope"],
+                        "label-lg": ["IBM Plex Sans Thai"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-sm": ["IBM Plex Sans Thai"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-background flex justify-between items-center w-full px-margin-mobile h-14 sticky top-0 z-40">
+<button class="text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">ประวัติการสแกน</h1>
+<button class="text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow px-margin-mobile pt-sm pb-xxl flex flex-col gap-md">
+<!-- Scan History List -->
+<div class="flex flex-col gap-md">
+<!-- History Item 1: Warning -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(11,37,69,0.05)] p-md flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img alt="Serum bottle" class="w-full h-full object-cover" data-alt="A clean, modern product shot of a small glass serum bottle with a white dropper cap, set against a pristine white background. Soft, diffused lighting creates a clinical yet approachable aesthetic, highlighting the transparency of the glass and the subtle texture of the liquid inside." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtNLtpcBe35NHCW-SgqzmyGqtkygzhv4Z_YKs6XsyTx632mOOMDMdSNUJXkXB-_n7cZiEbmKqjbhVEoWHb_qK_cxO1QmdfDmEQIr060AdVoufhR8SihwHEMxBfSBBK3i2PXdnYVQ-xudgaPffX6Tw6QbR5aVSMnOHTHFwEAn0EsVieUW_4CbPtbPjXAhF-YApZdJiA0nugYMki_sWLPiOkiweBfJEOFtiWTEDDBSeMVtGD6kHav4ib6dky1pb5bArogWkiQ1cWa7Y"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">เซรั่มไฮยา</h3>
+<span class="bg-error-container text-on-error-container font-label-sm text-[10px] px-2 py-0.5 rounded-full">ควรระวัง</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-base">10 พ.ค. 67 • 10:43</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ความเสี่ยง <span class="text-error font-medium">6.5</span>/10</p>
+</div>
+</div>
+<!-- History Item 2: Safe -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(11,37,69,0.05)] p-md flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img alt="Moisturizer tube" class="w-full h-full object-cover" data-alt="A minimalist white squeeze tube of moisturizer lying on a bright, sterile surface. The lighting is high-key and bright, evoking a sense of clinical purity and hygiene. The composition is simple, focusing entirely on the product form with soft ambient shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLujdPboqWsNRoX-PtXN0YNEy5oobCOSu275030KNew7simx-8E6nnFBAYGQ5gAR-wMpzcLhXbthxV-y67yDGho7UCWZawRshPKrKwYDXlvd2Vi5HcfonQxO8jU7Q1pljpVTFjZlQeRPAcmfGhNyls95_BMtVdpvZWnRyxHdzQzaJAUwv3dQUAWLuMoEcPToGKNEz-z2FUX5mfeb39zT1aZcUhymYgmf9Pwhj2fUqDZeiLKenZaf9SmbOtVf5FMqcCnwas7x1-CMw"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">มอยส์เจอไรเซอร์</h3>
+<span class="bg-[#E6F4EA] text-[#137333] font-label-sm text-[10px] px-2 py-0.5 rounded-full">ปลอดภัย</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-base">10 พ.ค. 67 • 09:15</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ความเสี่ยง <span class="text-[#137333] font-medium">2.0</span>/10</p>
+</div>
+</div>
+<!-- History Item 3: Safe -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(11,37,69,0.05)] p-md flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img alt="Toner bottle" class="w-full h-full object-cover" data-alt="A tall, frosted plastic bottle of skin toner with a simple white cap, standing upright on a seamless white backdrop. The lighting is incredibly soft and bright, creating a sense of refreshing clarity and dermatological safety. The minimalist styling emphasizes the product's function." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-XZOhqPMB5I71TOn-lwA7KvpdJphbn2J3J7BaZpmAauhFqBTIHBbLXEpMiG5PmCZOYzZRiDR4FSaiMZMj46UD5Np8bXgzSVx_0hxTuq8aA6L8n5Ca9JAq_Twph9YzJZZdD3HX-OnLjMVk7KSGImPHp2x_wp8Xl9yMmBO4tzdblkUzqhpx_U6EihcHOG_PJZpB2w-yHvW7-H8lQ9yhMZoVtY5E0M38zLB6YLFPgY7CJdGRQxyq2fV1VZ-XPzjKRZAri4fWlGk0k0U"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">โทนเนอร์อ่อนโยน</h3>
+<span class="bg-[#E6F4EA] text-[#137333] font-label-sm text-[10px] px-2 py-0.5 rounded-full">ปลอดภัย</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-base">8 พ.ค. 67 • 18:30</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ความเสี่ยง <span class="text-[#137333] font-medium">1.5</span>/10</p>
+</div>
+</div>
+<!-- History Item 4: Warning -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(11,37,69,0.05)] p-md flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img alt="Cream jar" class="w-full h-full object-cover" data-alt="A sleek, low-profile glass jar containing face cream, resting on a clean white surface. The lighting is crisp and even, highlighting the premium quality of the packaging. The overall mood is clinical yet luxurious, suitable for a high-end skincare application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoha9SWcbJ-dNj8Q3NlRUFzcd9z7OVbdT_PH6jrlxJON_iTuWNEACrXVEw-WEINIHUXROmyI8ooksRQjS0Hfyz81qjCDquNHDkSUGx7Ko2hkQ-hIU9mqdPxlpCeoXfM_HeX6MrWjyKfd0B9LksSBIHlNQZebBZx7dPwr6kSJ4MSUiPGAjYTbWCdKd7KPTgtTJf5kC0R2EfG39ZrAkeWtg4I5HCivyo-6lSV7-ubvkfJVTOuvOajZzLC1DsdM6RLl1mV1Lm7tjBMIw"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">ครีมบำรุงกลางคืน</h3>
+<span class="bg-error-container text-on-error-container font-label-sm text-[10px] px-2 py-0.5 rounded-full">ควรระวัง</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-base">5 พ.ค. 67 • 21:00</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ความเสี่ยง <span class="text-error font-medium">5.8</span>/10</p>
+</div>
+</div>
+<!-- History Item 5: Safe -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_20px_rgba(11,37,69,0.05)] p-md flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden">
+<img alt="Cleanser bottle" class="w-full h-full object-cover" data-alt="A cylindrical pump bottle of facial cleanser, rendered in smooth white plastic, standing against a stark white background. The image is brightly lit with very soft shadows, conveying a sense of hygienic purity and modern dermatological science." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2r5SSGTlrBbfE0gFMtUwhhyJnZtK2hTF_vZNhFykpEZBdIrZtCT-NZBZ33ISk_H5v3G5-SkaFWjsEhFTJy7-DHaHgv0auhm6pd7TlBYVY7iaF4Sx6xsMBTe7EGvHl6nj65J_D8tNVaytpvCKn7FcHEd5f5DzD9vsFIurGxy_iZQPF1FF8Rmkhgn6AxNSIe1NuTUuqJosjhKtaJoa9imK2qBHuohkYmmftcx_A3wJIqmOHXqKtSUCwp_5V2Y3uPCFbO-Y9OkeqO3I"/>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">เจลล้างหน้า</h3>
+<span class="bg-[#E6F4EA] text-[#137333] font-label-sm text-[10px] px-2 py-0.5 rounded-full">ปลอดภัย</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-base">1 พ.ค. 67 • 08:00</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ความเสี่ยง <span class="text-[#137333] font-medium">0.5</span>/10</p>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-lg flex justify-center">
+<button class="bg-surface-container-lowest border border-primary text-primary font-label-lg text-label-lg rounded-full py-3 px-8 flex items-center gap-2 hover:bg-surface-container transition-colors shadow-sm">
+                ดูประวัติทั้งหมด
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">chevron_right</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface shadow-[0px_-4px_20px_rgba(11,37,69,0.05)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">search</span>
+<span class="font-label-sm text-label-sm mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 0;">center_focus_strong</span>
+<span class="font-label-sm text-label-sm mt-1">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-container/20 rounded-xl px-3 py-1 scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+<span class="font-label-sm text-label-sm mt-1 font-bold">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-primary-container transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+<!-- Padding for BottomNav -->
+<div class="h-20 md:hidden"></div>
+</body></html>

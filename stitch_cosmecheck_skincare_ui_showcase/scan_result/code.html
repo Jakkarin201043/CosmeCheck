@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - ผลการวิเคราะห์</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed": "#002020",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#5dd9d8",
+                        "secondary-fixed-dim": "#abc7ff",
+                        "on-tertiary-container": "#172f4f",
+                        "inverse-on-surface": "#ecf2f1",
+                        "surface-container": "#e9efee",
+                        "on-primary-container": "#003535",
+                        "outline-variant": "#bcc9c8",
+                        "surface-tint": "#006a6a",
+                        "on-secondary-fixed-variant": "#00458e",
+                        "on-error": "#ffffff",
+                        "surface": "#f5fafa",
+                        "on-secondary-container": "#002959",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#5dd9d8",
+                        "inverse-surface": "#2c3231",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#314769",
+                        "surface-variant": "#dee4e3",
+                        "surface-container-high": "#e4e9e8",
+                        "secondary-container": "#448ffd",
+                        "primary": "#006a6a",
+                        "tertiary-fixed-dim": "#b1c7f0",
+                        "tertiary-fixed": "#d5e3ff",
+                        "secondary": "#005cba",
+                        "surface-container-highest": "#dee4e3",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#004f50",
+                        "surface-container-low": "#eff5f4",
+                        "secondary-fixed": "#d7e3ff",
+                        "on-surface-variant": "#3d4949",
+                        "outline": "#6d7a79",
+                        "on-background": "#171d1c",
+                        "tertiary-container": "#8197bd",
+                        "tertiary": "#495f82",
+                        "primary-container": "#10a7a7",
+                        "primary-fixed": "#7cf5f5",
+                        "on-surface": "#171d1c",
+                        "background": "#f5fafa",
+                        "surface-bright": "#f5fafa",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#001c3b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d5dbda",
+                        "on-secondary-fixed": "#001b3f"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem"
+                    },
+                    spacing: {
+                        "sm": "12px",
+                        "xxl": "48px",
+                        "xs": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "gutter-mobile": "16px",
+                        "base": "4px",
+                        "app-bar": "56px"
+                    },
+                    fontFamily: {
+                        "body-md": ["IBM Plex Sans Thai"],
+                        "body-sm": ["IBM Plex Sans Thai"],
+                        "body-lg": ["IBM Plex Sans Thai"],
+                        "headline-xl": ["Manrope"],
+                        "label-lg": ["IBM Plex Sans Thai"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-sm": ["IBM Plex Sans Thai"]
+                    },
+                    fontSize: {
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "headline-xl": ["30px", { lineHeight: "38px", fontWeight: "700" }],
+                        "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }]
+                    },
+                    boxShadow: {
+                        'soft-ambient': '0px 4px 20px rgba(11, 37, 69, 0.05)',
+                        'active-glow': '0px 8px 24px rgba(16, 167, 167, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Mobile container constraints for preview */
+        .app-container {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: theme('colors.background');
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) {
+            .app-container {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                border-radius: 2rem;
+                overflow: hidden;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body>
+<div class="app-container flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-app-bar bg-background dark:bg-background z-10 sticky top-0">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors rounded-full">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-container truncate px-4">ผลการวิเคราะห์</h1>
+<button aria-label="Share" class="w-10 h-10 flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors rounded-full">
+<span class="material-symbols-outlined text-2xl">share</span>
+</button>
+</header>
+<!-- Main Content Scrollable Area -->
+<main class="flex-1 overflow-y-auto px-margin-mobile pb-32">
+<!-- Risk Alert Card -->
+<div class="mt-xs bg-error-container/30 border border-error-container rounded-[24px] p-6 flex flex-col items-center text-center shadow-soft-ambient">
+<div class="w-16 h-16 bg-error-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-4xl text-error fill">warning</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-error mb-2">ควรระวัง</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">พบสารที่อาจก่อให้เกิดการแพ้ของคุณ</p>
+<div class="w-full grid grid-cols-2 gap-4 bg-surface-container-lowest rounded-2xl p-4 shadow-sm">
+<div class="flex flex-col items-center border-r border-surface-variant">
+<span class="font-label-sm text-label-sm text-outline mb-1">คะแนนความเสี่ยง</span>
+<div class="flex items-baseline">
+<span class="font-headline-xl text-headline-xl text-error">6.5</span>
+<span class="font-body-sm text-body-sm text-outline ml-1">/ 10</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center">
+<span class="font-label-sm text-label-sm text-outline mb-1">ระดับความเสี่ยง</span>
+<span class="font-headline-md text-headline-md text-error">ในระดับสูง</span>
+</div>
+</div>
+</div>
+<!-- Allergen List Section -->
+<section class="mt-lg">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-label-lg text-label-lg text-on-surface">สารที่ตรงกับโปรไฟล์การแพ้ของคุณ</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-error-container/50 border border-error/20 font-label-sm text-label-sm text-error">
+                        Alcohol Denat.
+                    </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-error-container/50 border border-error/20 font-label-sm text-label-sm text-error">
+                        Fragrance
+                    </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-error-container/50 border border-error/20 font-label-sm text-label-sm text-error">
+                        Paraben
+                    </span>
+</div>
+</section>
+<!-- Beneficial Ingredients Section -->
+<section class="mt-lg">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-label-lg text-label-lg text-on-surface">สารที่เป็นประโยชน์</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-primary-container/20 border border-primary/20 font-label-sm text-label-sm text-primary">
+                        Niacinamide
+                    </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-primary-container/20 border border-primary/20 font-label-sm text-label-sm text-primary">
+                        Glycerin
+                    </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-primary-container/20 border border-primary/20 font-label-sm text-label-sm text-primary">
+                        Panthenol
+                    </span>
+</div>
+</section>
+<!-- Caution Ingredients Section -->
+<section class="mt-lg">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-label-lg text-label-lg text-on-surface">สารที่ต้องระวัง</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-tertiary-container/30 border border-tertiary/20 font-label-sm text-label-sm text-on-tertiary-container">
+                        Alcohol Denat.
+                    </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-tertiary-container/30 border border-tertiary/20 font-label-sm text-label-sm text-on-tertiary-container">
+                        Fragrance
+                    </span>
+<span class="inline-flex items-center px-3 py-1.5 rounded-full bg-tertiary-container/30 border border-tertiary/20 font-label-sm text-label-sm text-on-tertiary-container">
+                        Essential Oil
+                    </span>
+</div>
+</section>
+<!-- Info Note -->
+<div class="mt-lg bg-surface-container-low rounded-xl p-4 flex gap-3 items-start border border-surface-variant">
+<span class="material-symbols-outlined text-outline text-xl mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    ผลการวิเคราะห์นี้อ้างอิงจากฐานข้อมูลส่วนผสม อาจเปลี่ยนแปลงตามสัดส่วนที่ผู้ผลิตใช้
+                </p>
+</div>
+</main>
+<!-- Fixed Action Buttons (Replaces Bottom Nav for Transactional/Result screen) -->
+<div class="fixed bottom-0 w-full max-w-[430px] bg-surface-container-lowest/90 backdrop-blur-md border-t border-surface-variant p-4 pb-8 flex gap-3 z-50">
+<button class="flex-1 h-14 bg-surface-container-lowest border border-outline font-label-lg text-label-lg text-on-surface rounded-full flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">bookmark_border</span>
+                บันทึกสินค้า
+            </button>
+<button class="flex-1 h-14 bg-primary text-on-primary font-label-lg text-label-lg rounded-full flex items-center justify-center shadow-soft-ambient hover:bg-primary-fixed-variant transition-colors">
+                ดูรายละเอียด
+            </button>
+</div>
+</div>
+</body></html>

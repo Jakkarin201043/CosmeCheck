@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CosmeCheck - รายละเอียดส่วนผสม</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#002020",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#5dd9d8",
+                        "secondary-fixed-dim": "#abc7ff",
+                        "on-tertiary-container": "#172f4f",
+                        "inverse-on-surface": "#ecf2f1",
+                        "surface-container": "#e9efee",
+                        "on-primary-container": "#003535",
+                        "outline-variant": "#bcc9c8",
+                        "surface-tint": "#006a6a",
+                        "on-secondary-fixed-variant": "#00458e",
+                        "on-error": "#ffffff",
+                        "surface": "#f5fafa",
+                        "on-secondary-container": "#002959",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#5dd9d8",
+                        "inverse-surface": "#2c3231",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#314769",
+                        "surface-variant": "#dee4e3",
+                        "surface-container-high": "#e4e9e8",
+                        "secondary-container": "#448ffd",
+                        "primary": "#006a6a",
+                        "tertiary-fixed-dim": "#b1c7f0",
+                        "tertiary-fixed": "#d5e3ff",
+                        "secondary": "#005cba",
+                        "surface-container-highest": "#dee4e3",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#004f50",
+                        "surface-container-low": "#eff5f4",
+                        "secondary-fixed": "#d7e3ff",
+                        "on-surface-variant": "#3d4949",
+                        "outline": "#6d7a79",
+                        "on-background": "#171d1c",
+                        "tertiary-container": "#8197bd",
+                        "tertiary": "#495f82",
+                        "primary-container": "#10a7a7",
+                        "primary-fixed": "#7cf5f5",
+                        "on-surface": "#171d1c",
+                        "background": "#f5fafa",
+                        "surface-bright": "#f5fafa",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#001c3b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d5dbda",
+                        "on-secondary-fixed": "#001b3f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xxl": "48px",
+                        "xs": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "gutter-mobile": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["IBM Plex Sans Thai"],
+                        "body-sm": ["IBM Plex Sans Thai"],
+                        "body-lg": ["IBM Plex Sans Thai"],
+                        "headline-xl": ["Manrope"],
+                        "label-lg": ["IBM Plex Sans Thai"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-sm": ["IBM Plex Sans Thai"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f5fafa; /* bg-background */
+        }
+        /* Custom scrollbar for modern feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bcc9c8; /* outline-variant */
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased text-on-surface font-body-md flex flex-col min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="docked full-width top-0 bg-background dark:bg-background z-40 sticky shadow-[0px_4px_20px_rgba(11,37,69,0.02)]">
+<div class="flex justify-between items-center w-full px-margin-mobile h-14">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-primary dark:text-primary-container" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-container">รายละเอียดส่วนผสม</h1>
+<button aria-label="Search" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant dark:hover:bg-on-surface-variant transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-primary dark:text-primary-container" style="font-variation-settings: 'FILL' 0;">search</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow w-full max-w-[600px] mx-auto px-margin-mobile pt-md pb-xxl pb-[100px]">
+<!-- Header Section: Ingredient Identity -->
+<div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-[0px_4px_20px_rgba(11,37,69,0.05)] mb-lg relative overflow-hidden flex flex-col items-center text-center">
+<!-- Decorative subtle background element -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center mb-md shadow-sm">
+<span class="material-symbols-outlined text-[32px] text-primary" style="font-variation-settings: 'FILL' 1;">science</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-xs">Niacinamide</h2>
+<p class="font-body-lg text-primary mb-sm">ไนอะซินาไมด์</p>
+<div class="flex items-center gap-xs bg-surface text-on-surface-variant px-md py-2 rounded-full border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">verified</span>
+<span class="font-label-sm text-label-sm">ชื่อ INCI: Niacinamide</span>
+</div>
+</div>
+<!-- Content Bento Grid -->
+<div class="grid grid-cols-1 gap-md">
+<!-- Section 1: What is it? -->
+<section class="bg-surface-container-lowest rounded-[20px] p-md shadow-[0px_4px_20px_rgba(11,37,69,0.03)] border border-surface-variant/50">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">คืออะไร</h3>
+</div>
+<p class="font-body-sm text-on-surface-variant ml-[44px]">วิตามินบี 3 รูปแบบหนึ่งซึ่งอุดมบำรุงผิวหลายด้าน</p>
+</section>
+<!-- Section 2: Benefits -->
+<section class="bg-surface-container-lowest rounded-[20px] p-md shadow-[0px_4px_20px_rgba(11,37,69,0.03)] border border-surface-variant/50">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">ประโยชน์</h3>
+</div>
+<ul class="font-body-sm text-on-surface-variant space-y-2 ml-[44px]">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">check_circle</span>
+<span>เสริมเกราะผิว ลดการสูญเสียน้ำ</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">check_circle</span>
+<span>ลดรอยแดงและดำกระจุดด่างดำจากสิวบนใบหน้า</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">check_circle</span>
+<span>ลดความมันส่วนเกิน และลดอาการอักเสบ</span>
+</li>
+</ul>
+</section>
+<!-- Section 3: Precautions (Highlighting Safety) -->
+<section class="bg-error-container/30 rounded-[20px] p-md shadow-[0px_4px_20px_rgba(11,37,69,0.03)] border border-error/20">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">ข้อควรระวัง</h3>
+</div>
+<ul class="font-body-sm text-on-surface-variant space-y-2 ml-[44px]">
+<li class="flex items-start gap-2">
+<span class="block w-1.5 h-1.5 rounded-full bg-error mt-2"></span>
+<span>โดยทั่วไปปลอดภัย แต่อาจมีรอยแดง</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="block w-1.5 h-1.5 rounded-full bg-error mt-2"></span>
+<span>อาจมีอาการคัน จี๊ดๆ ในช่วงแรกที่เริ่มใช้</span>
+</li>
+</ul>
+</section>
+<!-- Section 4: Suitability -->
+<section class="bg-surface-container-lowest rounded-[20px] p-md shadow-[0px_4px_20px_rgba(11,37,69,0.03)] border border-surface-variant/50">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">face</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">เหมาะกับ</h3>
+</div>
+<div class="ml-[44px]">
+<p class="font-body-sm text-on-surface-variant mb-3">ทุกสภาพผิว โดยเฉพาะผิวมัน ผิวผสม และผิวที่มีปัญหารอยแดง</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-sm text-label-sm border border-outline-variant/30">ผิวมัน</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-sm text-label-sm border border-outline-variant/30">ผิวผสม</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant rounded-full font-label-sm text-label-sm border border-outline-variant/30">ผิวแพ้ง่าย</span>
+</div>
+</div>
+</section>
+<!-- Section 5: References -->
+<section class="bg-surface-container-lowest rounded-[20px] p-md shadow-[0px_4px_20px_rgba(11,37,69,0.03)] border border-surface-variant/50">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">งานวิจัยอ้างอิง</h3>
+</div>
+<div class="flex flex-wrap gap-3 ml-[44px] mt-xs">
+<a class="flex items-center gap-1.5 px-3 py-1.5 bg-surface text-secondary border border-secondary/20 rounded-lg hover:bg-secondary/5 transition-colors group" href="#">
+<span class="font-label-sm text-label-sm font-semibold">PubChem</span>
+<span class="material-symbols-outlined text-[14px] opacity-70 group-hover:opacity-100" style="font-variation-settings: 'FILL' 0;">open_in_new</span>
+</a>
+<a class="flex items-center gap-1.5 px-3 py-1.5 bg-surface text-secondary border border-secondary/20 rounded-lg hover:bg-secondary/5 transition-colors group" href="#">
+<span class="font-label-sm text-label-sm font-semibold">CIR</span>
+<span class="material-symbols-outlined text-[14px] opacity-70 group-hover:opacity-100" style="font-variation-settings: 'FILL' 0;">open_in_new</span>
+</a>
+<a class="flex items-center gap-1.5 px-3 py-1.5 bg-surface text-secondary border border-secondary/20 rounded-lg hover:bg-secondary/5 transition-colors group" href="#">
+<span class="font-label-sm text-label-sm font-semibold">CosIng</span>
+<span class="material-symbols-outlined text-[14px] opacity-70 group-hover:opacity-100" style="font-variation-settings: 'FILL' 0;">open_in_new</span>
+</a>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<!-- Suppressed on sub-pages logically. However, the user prompt specifically asked to generate "Ingredient Detail screen" and didn't explicitly demand removing bottom nav if it's a detail screen in this precise context (though rules say hide on details). The screenshot shows it ON the detail screen (screen 8). I will follow the strict rule: "You MUST suppress the navigation shell if the page intent is: ... Any sub-page featuring a 'Close' or 'Back' action". The top bar has a back arrow, implying a sub-page. I will omit the BottomNavBar to follow strict rules. -->
+</body></html>

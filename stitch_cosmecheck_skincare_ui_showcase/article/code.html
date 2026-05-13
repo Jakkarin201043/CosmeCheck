@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Education Article - CosmeCheck</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#002020",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#5dd9d8",
+                        "secondary-fixed-dim": "#abc7ff",
+                        "on-tertiary-container": "#172f4f",
+                        "inverse-on-surface": "#ecf2f1",
+                        "surface-container": "#e9efee",
+                        "on-primary-container": "#003535",
+                        "outline-variant": "#bcc9c8",
+                        "surface-tint": "#006a6a",
+                        "on-secondary-fixed-variant": "#00458e",
+                        "on-error": "#ffffff",
+                        "surface": "#f5fafa",
+                        "on-secondary-container": "#002959",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#5dd9d8",
+                        "inverse-surface": "#2c3231",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#314769",
+                        "surface-variant": "#dee4e3",
+                        "surface-container-high": "#e4e9e8",
+                        "secondary-container": "#448ffd",
+                        "primary": "#006a6a",
+                        "tertiary-fixed-dim": "#b1c7f0",
+                        "tertiary-fixed": "#d5e3ff",
+                        "secondary": "#005cba",
+                        "surface-container-highest": "#dee4e3",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#004f50",
+                        "surface-container-low": "#eff5f4",
+                        "secondary-fixed": "#d7e3ff",
+                        "on-surface-variant": "#3d4949",
+                        "outline": "#6d7a79",
+                        "on-background": "#171d1c",
+                        "tertiary-container": "#8197bd",
+                        "tertiary": "#495f82",
+                        "primary-container": "#10a7a7",
+                        "primary-fixed": "#7cf5f5",
+                        "on-surface": "#171d1c",
+                        "background": "#f5fafa",
+                        "surface-bright": "#f5fafa",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#001c3b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d5dbda",
+                        "on-secondary-fixed": "#001b3f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xxl": "48px",
+                        "xs": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "gutter-mobile": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["IBM Plex Sans Thai"],
+                        "body-sm": ["IBM Plex Sans Thai"],
+                        "body-lg": ["IBM Plex Sans Thai"],
+                        "headline-xl": ["Manrope"],
+                        "label-lg": ["IBM Plex Sans Thai"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-sm": ["IBM Plex Sans Thai"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-xl": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen pb-[80px]">
+<!-- TopAppBar -->
+<header class="bg-background flex justify-between items-center w-full px-margin-mobile h-14 sticky top-0 z-40">
+<button class="text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">บทความความรู้</h1>
+<button class="text-on-surface-variant hover:bg-surface-variant transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">bookmark_border</span>
+</button>
+</header>
+<main class="px-margin-mobile py-md flex flex-col gap-lg">
+<!-- Hero Image -->
+<div class="w-full h-48 rounded-xl overflow-hidden shadow-lg mb-xs relative">
+<img alt="Cosmetics and skincare products arranged on a clean white surface." class="w-full h-full object-cover" data-alt="A clinical, soft-minimalist composition of sleek skincare bottles and a subtle drop of liquid on a pristine white marble surface. The lighting is soft and bright, creating a clean, pure aesthetic with subtle teal shadows. Professional editorial style for a modern wellness app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOP3dCo3RWH8Q4io058XkBVO9AXcyvbkC1IdZnM1yA7IDnbuFHqONO5OCg5rl9xLlglUUpwUeQmXyBgyh2soCcYSQw6663lRJ1KJXFJIS-cMusS-0ApSsUn8Txo0qdyaOtZ5JcRvE42M3wMBUSbY-VY5UDKXatbCFzjts799MNOIz5EZj-j7Bt7-EBK_nDsHuz0zFFcDDcTBHbvAvAEppfrpsMzJ96hUHcvbNR8OwXOevQDqyaSDtmIwNnlLtEan4fojmg3rx76do"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<h2 class="font-headline-lg text-headline-lg text-on-primary mb-1">Alcohol ในสกินแคร์น่ากลัวไหม?</h2>
+<p class="font-body-sm text-surface-container">เรียนรู้ความแตกต่างระหว่างแอลกอฮอล์แต่ละชนิด</p>
+</div>
+</div>
+<!-- Introduction -->
+<section>
+<p class="font-body-md text-on-surface-variant leading-relaxed mb-4">
+                เมื่อพูดถึง "แอลกอฮอล์" ในสกินแคร์ หลายคนอาจจะรู้สึกกลัวและหลีกเลี่ยง เพราะคิดว่าจะทำให้ผิวแห้งหรือระคายเคือง แต่ความจริงแล้ว แอลกอฮอล์ในเครื่องสำอางมีหลายประเภท และไม่ได้น่ากลัวอย่างที่คิดเสมอไป การทำความเข้าใจประเภทของแอลกอฮอล์จะช่วยให้คุณเลือกผลิตภัณฑ์ที่เหมาะสมกับผิวได้ดีขึ้น
+            </p>
+</section>
+<!-- Comparison Cards -->
+<section class="flex flex-col gap-md">
+<!-- Drying Alcohols -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0px_4px_20px_rgba(11,37,69,0.05)] border border-error-container relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-error"></div>
+<div class="pl-3">
+<div class="flex items-start justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">แอลกอฮอล์ชนิดระเหยไว</h3>
+<p class="font-body-sm text-on-surface-variant">(Drying Alcohols)</p>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded bg-error-container text-error font-label-sm text-label-sm">
+                            ควรระวัง
+                        </span>
+</div>
+<p class="font-body-sm text-on-surface-variant mb-3 mt-3">
+                        มักใช้เป็นตัวทำละลาย ช่วยให้ผลิตภัณฑ์ซึมซาบเร็ว ให้ความรู้สึกเย็นสบายผิว แต่อาจดึงความชุ่มชื้นออกจากผิว ทำให้ผิวแห้งตึงหรือระคายเคืองได้ง่ายหากใช้ในปริมาณมาก
+                    </p>
+<div class="bg-surface-container-low rounded-lg p-3">
+<p class="font-label-sm text-label-sm text-on-surface mb-1">ตัวอย่างชื่อบนฉลาก (INCI Name):</p>
+<p class="font-body-sm text-on-surface-variant">
+                            Alcohol Denat., Ethanol, Isopropyl Alcohol, Methanol, SD Alcohol
+                        </p>
+</div>
+</div>
+</div>
+<!-- Fatty Alcohols -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0px_4px_20px_rgba(11,37,69,0.05)] border border-primary-container/30 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-primary-container"></div>
+<div class="pl-3">
+<div class="flex items-start justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">แอลกอฮอล์ชนิดที่ให้ความชุ่มชื้น</h3>
+<p class="font-body-sm text-on-surface-variant">(Fatty Alcohols)</p>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-tint/10 text-surface-tint font-label-sm text-label-sm">
+                            ปลอดภัย
+                        </span>
+</div>
+<p class="font-body-sm text-on-surface-variant mb-3 mt-3">
+                        สกัดจากพืชหรือน้ำมันสัตว์ มีลักษณะเป็นแวกซ์ ช่วยเคลือบผิว เก็บกักความชุ่มชื้น ทำให้ผิวนุ่มลื่น และช่วยให้เนื้อผลิตภัณฑ์คงตัว ไม่เป็นอันตรายต่อผิว
+                    </p>
+<div class="bg-surface-container-low rounded-lg p-3">
+<p class="font-label-sm text-label-sm text-on-surface mb-1">ตัวอย่างชื่อบนฉลาก (INCI Name):</p>
+<p class="font-body-sm text-on-surface-variant">
+                            Cetyl Alcohol, Stearyl Alcohol, Cetearyl Alcohol, Myristyl Alcohol
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Summary Box -->
+<section class="mt-xs">
+<div class="bg-secondary-container/10 border border-secondary-container/20 rounded-xl p-md">
+<div class="flex items-center gap-xs mb-2 text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h4 class="font-headline-md text-headline-md">ข้อสรุป</h4>
+</div>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                    ไม่ใช่แอลกอฮอล์ทุกชนิดจะแย่เสมอไป <strong>ความปลอดภัยขึ้นอยู่กับชนิดของแอลกอฮอล์ ความเข้มข้นที่ใช้ และสภาพผิวของคุณ</strong> หากคุณมีผิวแห้งหรือแพ้ง่าย ควรระวัง Drying Alcohols แต่สามารถใช้ Fatty Alcohols ได้อย่างปลอดภัย ทั้งนี้ การทำ <a class="text-primary hover:underline font-medium" href="#">Patch Test</a> ก่อนใช้ผลิตภัณฑ์ใหม่ยังคงเป็นสิ่งที่ควรทำเสมอ
+                </p>
+</div>
+</section>
+</main>
+<!-- Suppressed Nav Shell as per instructions for a content-focused view/sub-page -->
+</body></html>
