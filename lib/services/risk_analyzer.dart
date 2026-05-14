@@ -143,9 +143,17 @@ class RiskAnalyzer {
 
     final sensitiveSkin = skinType == 'ผิวแพ้ง่าย';
     final drySkin = skinType == 'ผิวแห้ง';
-    final hasFragrance = knownIngredients.any((item) => item.id == 'fragrance');
+    final hasFragrance = knownIngredients.any(
+      (item) =>
+          item.id == 'fragrance' ||
+          item.id == 'fragrance_parfum' ||
+          IngredientParser.normalize(item.name).contains('fragrance'),
+    );
     final hasAlcoholDenat = knownIngredients.any(
-      (item) => item.id == 'alcohol-denat',
+      (item) =>
+          item.id == 'alcohol-denat' ||
+          item.id == 'alcohol_denat' ||
+          IngredientParser.normalize(item.name) == 'alcohol denat',
     );
 
     if (hasFragrance) {

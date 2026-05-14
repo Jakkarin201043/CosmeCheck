@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../data/ingredient_database.dart';
 import '../models/ingredient.dart';
 import '../models/ingredient_confirmation_draft.dart';
 import '../services/ingredient_parser.dart';
@@ -78,7 +77,9 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
   }
 
   List<Ingredient> get _suggestions {
-    return IngredientDatabase.ingredients
+    return context
+        .watch<AppState>()
+        .ingredients
         .where((ingredient) => !_containsAnyIngredientTerm(ingredient))
         .take(6)
         .toList();
@@ -96,7 +97,7 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
   List<Ingredient> _knownMatches(String ingredient) {
     return IngredientParser.matchKnownIngredients(
       detectedIngredients: [ingredient],
-      database: IngredientDatabase.ingredients,
+      database: context.read<AppState>().ingredients,
     );
   }
 

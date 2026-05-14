@@ -19,13 +19,15 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     SharedPreferences.setMockInitialValues({});
+    CosmeCheckApp.resetRouterForTesting();
     final state = AppState();
     await state.load();
 
     await tester.pumpWidget(
       ChangeNotifierProvider.value(value: state, child: const CosmeCheckApp()),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
 
     return state;
   }

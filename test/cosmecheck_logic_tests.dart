@@ -1,4 +1,6 @@
 import 'package:cosmecheck/data/ingredient_database.dart';
+import 'package:cosmecheck/data/ingredient_repository.dart';
+import 'package:cosmecheck/models/ingredient.dart';
 import 'package:cosmecheck/services/ingredient_parser.dart';
 import 'package:cosmecheck/services/risk_analyzer.dart';
 import 'package:cosmecheck/state/app_state.dart';
@@ -6,6 +8,80 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  Future<List<Ingredient>> loadJsonIngredients() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    return const IngredientRepository().loadIngredients();
+  }
+
+  test('ingredient repository loads all 30 JSON ingredients', () async {
+    final ingredients = await loadJsonIngredients();
+
+    expect(ingredients, hasLength(30));
+    expect(ingredients.map((item) => item.id), contains('fragrance_parfum'));
+    expect(ingredients.map((item) => item.id), contains('cetearyl_alcohol'));
+    expect(ingredients.every((item) => item.toJson().isNotEmpty), isTrue);
+  });
+
+  test('ingredient repository searches JSON aliases', () async {
+    final ingredients = await loadJsonIngredients();
+    final results = IngredientRepository.search(ingredients, 'Vitamin B3');
+
+    expect(results.map((item) => item.name), contains('Niacinamide'));
+  });
+
+  test('ingredient repository maps Fragrance and Parfum searches', () async {
+    final ingredients = await loadJsonIngredients();
+    final fragranceResults = IngredientRepository.search(
+      ingredients,
+      'Fragrance',
+    );
+    final parfumResults = IngredientRepository.search(ingredients, 'Parfum');
+
+    expect(
+      fragranceResults.map((item) => item.id),
+      contains('fragrance_parfum'),
+    );
+    expect(parfumResults.map((item) => item.id), contains('fragrance_parfum'));
+  });
+
+  test(
+    'matcher separates Alcohol Denat from Cetearyl Alcohol in JSON database',
+    () async {
+      final ingredients = await loadJsonIngredients();
+
+      final denatMatch = IngredientParser.matchKnownIngredients(
+        detectedIngredients: const ['Alcohol Denat.'],
+        database: ingredients,
+      );
+      final cetearylMatch = IngredientParser.matchKnownIngredients(
+        detectedIngredients: const ['Cetearyl Alcohol'],
+        database: ingredients,
+      );
+      final genericAlcoholMatch = IngredientParser.matchKnownIngredients(
+        detectedIngredients: const ['Alcohol'],
+        database: ingredients,
+      );
+
+      expect(denatMatch.map((item) => item.id), contains('alcohol_denat'));
+      expect(
+        denatMatch.map((item) => item.id),
+        isNot(contains('cetearyl_alcohol')),
+      );
+      expect(
+        cetearylMatch.map((item) => item.id),
+        contains('cetearyl_alcohol'),
+      );
+      expect(
+        cetearylMatch.map((item) => item.id),
+        isNot(contains('alcohol_denat')),
+      );
+      expect(
+        genericAlcoholMatch.map((item) => item.id),
+        isNot(contains('alcohol_denat')),
+      );
+    },
+  );
+
   test('ingredient search terms include aliases', () {
     final fragrance = IngredientDatabase.findById('fragrance');
 

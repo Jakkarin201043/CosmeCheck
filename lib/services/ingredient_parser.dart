@@ -102,7 +102,10 @@ class IngredientParser {
       ...ingredient.aliases,
     ];
 
-    if (ingredient.id == 'alcohol-denat') {
+    final normalizedName = normalize(ingredient.name);
+    if (ingredient.id == 'alcohol-denat' ||
+        ingredient.id == 'alcohol_denat' ||
+        normalizedName == 'alcohol denat') {
       return terms
           .where((term) => normalize(term) != 'alcohol')
           .toList(growable: false);

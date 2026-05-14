@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-import '../data/ingredient_database.dart';
 import '../models/ingredient.dart';
 import '../services/ingredient_parser.dart';
+import '../state/app_state.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui_components.dart';
 
@@ -21,7 +22,7 @@ class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final results = IngredientDatabase.ingredients.where((ingredient) {
+    final results = context.watch<AppState>().ingredients.where((ingredient) {
       final normalizedQuery = IngredientParser.normalize(_query);
       final matchesQuery =
           normalizedQuery.isEmpty ||

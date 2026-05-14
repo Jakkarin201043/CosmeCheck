@@ -96,6 +96,9 @@ class Ingredient {
     if (value is List) {
       return value.map((item) => item.toString()).toList();
     }
+    if (value is String && value.trim().isNotEmpty) {
+      return [value];
+    }
     return const [];
   }
 }
