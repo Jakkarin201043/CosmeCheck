@@ -84,10 +84,9 @@ class CosmeCheckApp extends StatelessWidget {
           builder: (context, state) {
             final draft = state.extra is IngredientConfirmationDraft
                 ? state.extra! as IngredientConfirmationDraft
-                : IngredientConfirmationDraft(
+                : IngredientConfirmationDraft.fromOcrText(
                     rawOcrText: MockScanHistory.items.first.ocrText,
-                    parsedIngredients:
-                        MockScanHistory.items.first.detectedIngredients,
+                    database: context.read<AppState>().ingredients,
                     productName: MockScanHistory.items.first.productName,
                   );
             return ConfirmIngredientsScreen(draft: draft);

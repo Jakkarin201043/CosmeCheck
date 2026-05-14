@@ -107,6 +107,25 @@ class AppState extends ChangeNotifier {
     );
   }
 
+  ScanResult analyzeConfirmedIngredientGroups({
+    required String rawOcrText,
+    required List<Ingredient> knownIngredients,
+    required List<String> unknownIngredientNames,
+    String productName = 'ผลิตภัณฑ์จากการสแกน',
+  }) {
+    return RiskAnalyzer.analyze(
+      ocrText: rawOcrText,
+      detectedIngredients: [
+        ...knownIngredients.map((ingredient) => ingredient.name),
+        ...unknownIngredientNames,
+      ],
+      allergens: allergens,
+      skinType: _skinType,
+      ingredientDatabase: _ingredients,
+      productName: productName,
+    );
+  }
+
   Ingredient findIngredientById(String id) {
     return _ingredients.firstWhere(
       (ingredient) => ingredient.id == id,

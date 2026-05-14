@@ -1,5 +1,22 @@
 import '../models/ingredient.dart';
 
+class IngredientParseResult {
+  const IngredientParseResult({
+    required this.rawIngredientNames,
+    required this.knownIngredients,
+    required this.unknownIngredientNames,
+  });
+
+  final List<String> rawIngredientNames;
+  final List<Ingredient> knownIngredients;
+  final List<String> unknownIngredientNames;
+
+  List<String> get confirmedIngredientNames => [
+    ...knownIngredients.map((ingredient) => ingredient.name),
+    ...unknownIngredientNames,
+  ];
+}
+
 class IngredientParser {
   static final RegExp _labelPrefixPattern = RegExp(
     r'\b(active\s+ingredients?|ingredients?|inci)\b\s*[:：\-]?',
@@ -47,6 +64,58 @@ class IngredientParser {
     }).toList();
   }
 
+  static IngredientParseResult parseForConfirmation({
+    required String rawText,
+    required List<Ingredient> database,
+  }) {
+    return classifyDetectedIngredients(
+      detectedIngredients: parse(rawText),
+      database: database,
+    );
+  }
+
+  static IngredientParseResult classifyDetectedIngredients({
+    required List<String> detectedIngredients,
+    required List<Ingredient> database,
+  }) {
+    final knownById = <String, Ingredient>{};
+    final seenUnknown = <String>{};
+    final unknown = <String>[];
+    final seenRaw = <String>{};
+    final rawNames = <String>[];
+
+    for (final ingredientName in detectedIngredients) {
+      final cleanedName = cleanIngredientName(ingredientName);
+      final normalized = normalize(cleanedName);
+      if (normalized.isEmpty || !seenRaw.add(normalized)) {
+        continue;
+      }
+
+      rawNames.add(cleanedName);
+      final knownMatches = matchKnownIngredients(
+        detectedIngredients: [cleanedName],
+        database: database,
+      );
+
+      if (knownMatches.isEmpty) {
+        if (seenUnknown.add(normalized)) {
+          unknown.add(cleanedName);
+        }
+        continue;
+      }
+
+      for (final ingredient in knownMatches) {
+        knownById.putIfAbsent(ingredient.id, () => ingredient);
+      }
+    }
+
+    return IngredientParseResult(
+      rawIngredientNames: List.unmodifiable(rawNames),
+      knownIngredients: List.unmodifiable(knownById.values),
+      unknownIngredientNames: List.unmodifiable(unknown),
+    );
+  }
+
   static bool matchesAnyTerm(String value, Ingredient ingredient) {
     final valueCandidates = normalizedCandidates(value);
     return _ingredientMatchTerms(ingredient).any(
@@ -63,6 +132,9 @@ class IngredientParser {
         .trim()
         .replaceAll(RegExp(r'\s+'), ' ');
   }
+
+  static String cleanIngredientName(String value) =>
+      _trimIngredientToken(value);
 
   static Set<String> normalizedCandidates(String value) {
     final base = normalize(value);

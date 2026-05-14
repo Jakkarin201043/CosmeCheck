@@ -197,6 +197,56 @@ void main() {
   });
 
   test(
+    'parser separates OCR ingredients into known records and unknown names',
+    () async {
+      final ingredients = await loadJsonIngredients();
+      final result = IngredientParser.parseForConfirmation(
+        rawText:
+            'Ingredients: Water, Glycerin, Niacinamide, Caprylyl Glycol, Fragrance, Mystery Leaf Extract',
+        database: ingredients,
+      );
+
+      expect(
+        result.knownIngredients.map((item) => item.name),
+        containsAll(['Glycerin', 'Niacinamide', 'Fragrance / Parfum']),
+      );
+      expect(
+        result.unknownIngredientNames,
+        containsAll(['Water', 'Caprylyl Glycol', 'Mystery Leaf Extract']),
+      );
+      expect(result.unknownIngredientNames, hasLength(3));
+    },
+  );
+
+  test('unknown ingredients do not change risk score by default', () async {
+    final ingredients = await loadJsonIngredients();
+
+    final knownOnly = RiskAnalyzer.analyze(
+      ocrText: 'Glycerin, Niacinamide',
+      detectedIngredients: const ['Glycerin', 'Niacinamide'],
+      allergens: const [],
+      skinType: 'ผิวผสม',
+      ingredientDatabase: ingredients,
+    );
+    final withUnknown = RiskAnalyzer.analyze(
+      ocrText: 'Glycerin, Niacinamide, Mystery Leaf Extract',
+      detectedIngredients: const [
+        'Glycerin',
+        'Niacinamide',
+        'Mystery Leaf Extract',
+      ],
+      allergens: const [],
+      skinType: 'ผิวผสม',
+      ingredientDatabase: ingredients,
+    );
+
+    expect(withUnknown.unknownIngredients, contains('Mystery Leaf Extract'));
+    expect(withUnknown.riskScore, knownOnly.riskScore);
+    expect(withUnknown.cautionIngredients, knownOnly.cautionIngredients);
+    expect(withUnknown.matchedAllergens, knownOnly.matchedAllergens);
+  });
+
+  test(
     'app state analyzes arbitrary OCR text with existing parser and risk flow',
     () {
       final state = AppState()

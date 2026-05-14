@@ -138,20 +138,28 @@ void main() {
     await tester.pump(const Duration(milliseconds: 250));
 
     expect(find.byKey(const Key('rawOcrTextPreview')), findsOneWidget);
-    expect(find.byKey(const Key('confirmedIngredientList')), findsOneWidget);
+    expect(find.text('พบในฐานข้อมูล'), findsOneWidget);
+    expect(find.text('ยังไม่มีในฐานข้อมูล'), findsOneWidget);
+    expect(find.byKey(const Key('knownIngredientList')), findsOneWidget);
+    expect(find.byKey(const Key('unknownIngredientList')), findsOneWidget);
     expect(find.text('Glycerin'), findsWidgets);
+    expect(find.text('Water'), findsWidgets);
 
-    await tester.tap(find.byKey(const ValueKey('removeIngredient-0')));
+    await tester.tap(find.byKey(const ValueKey('removeUnknownIngredient-0')));
     await tester.pump();
+    expect(find.text('Water'), findsNothing);
 
+    await tester.ensureVisible(find.byKey(const Key('addIngredientField')));
+    await tester.pump();
     await tester.enterText(
       find.byKey(const Key('addIngredientField')),
       'Fragrance',
     );
-    await tester.tap(find.byKey(const Key('addIngredientButton')));
+    await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
 
-    expect(find.text('Fragrance'), findsWidgets);
+    expect(find.textContaining('Fragrance'), findsWidgets);
+    expect(find.byKey(const Key('knownIngredientList')), findsOneWidget);
 
     await tester.tap(
       find.byKey(const Key('analyzeConfirmedIngredientsButton')),
@@ -189,7 +197,8 @@ void main() {
     );
 
     expect(analyzeButton.onPressed, isNull);
-    expect(find.byKey(const Key('confirmedIngredientList')), findsNothing);
+    expect(find.byKey(const Key('knownIngredientList')), findsNothing);
+    expect(find.byKey(const Key('unknownIngredientList')), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
@@ -214,31 +223,33 @@ void main() {
     await tester.pump(const Duration(milliseconds: 250));
 
     expect(
-      find.byKey(const ValueKey('ingredientReview-glycerin')),
+      find.byKey(const ValueKey('knownIngredientReview-glycerin')),
       findsOneWidget,
     );
     expect(
-      find.byKey(const ValueKey('ingredientReview-mystery root extract')),
-      findsOneWidget,
-    );
-    expect(
-      find.byKey(const ValueKey('ingredientUnknown-mystery root extract')),
+      find.byKey(
+        const ValueKey('unknownIngredientReview-mystery root extract'),
+      ),
       findsOneWidget,
     );
 
+    await tester.ensureVisible(find.byKey(const Key('addIngredientField')));
+    await tester.pump();
     await tester.enterText(
       find.byKey(const Key('addIngredientField')),
       'Glycerin, Mystery Root Extract',
     );
-    await tester.tap(find.byKey(const Key('addIngredientButton')));
+    await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pump();
 
     expect(
-      find.byKey(const ValueKey('ingredientReview-glycerin')),
+      find.byKey(const ValueKey('knownIngredientReview-glycerin')),
       findsOneWidget,
     );
     expect(
-      find.byKey(const ValueKey('ingredientReview-mystery root extract')),
+      find.byKey(
+        const ValueKey('unknownIngredientReview-mystery root extract'),
+      ),
       findsOneWidget,
     );
 
@@ -249,7 +260,51 @@ void main() {
     await tester.pump(const Duration(milliseconds: 250));
 
     expect(find.textContaining('Mystery Root Extract'), findsWidgets);
+    expect(find.byKey(const Key('scanResultUnknownNotice')), findsOneWidget);
     expect(find.textContaining('/ 10'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('confirm ingredients supports manually adding unknown text', (
+    tester,
+  ) async {
+    await pumpCosmeCheck(tester, size: const Size(393, 873));
+
+    CosmeCheckApp.router.go(
+      '/confirm-ingredients',
+      extra: const IngredientConfirmationDraft(
+        rawOcrText: 'Ingredients: Glycerin',
+        parsedIngredients: ['Glycerin'],
+        productName: 'Manual Unknown QA',
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    await tester.ensureVisible(find.byKey(const Key('addIngredientField')));
+    await tester.pump();
+    await tester.enterText(
+      find.byKey(const Key('addIngredientField')),
+      'Mystery Leaf Extract',
+    );
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+
+    expect(
+      find.byKey(
+        const ValueKey('unknownIngredientReview-mystery leaf extract'),
+      ),
+      findsOneWidget,
+    );
+
+    await tester.tap(
+      find.byKey(const Key('analyzeConfirmedIngredientsButton')),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.textContaining('Mystery Leaf Extract'), findsWidgets);
+    expect(find.byKey(const Key('scanResultUnknownNotice')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

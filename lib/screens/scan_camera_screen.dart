@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../models/ingredient_confirmation_draft.dart';
-import '../services/ingredient_parser.dart';
 import '../services/ocr_service.dart';
 import '../services/real_ocr_service.dart';
 import '../state/app_state.dart';
@@ -134,9 +133,13 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
   }
 
   void _analyzeRecognizedText(String ocrText) {
-    final detectedIngredients = IngredientParser.parse(ocrText);
+    final draft = IngredientConfirmationDraft.fromOcrText(
+      rawOcrText: ocrText,
+      database: context.read<AppState>().ingredients,
+      productName: 'ผลิตภัณฑ์จากรูปภาพ',
+    );
 
-    if (detectedIngredients.isEmpty) {
+    if (draft.parsedIngredients.isEmpty) {
       setState(() {
         _isProcessing = false;
         _errorMessage = _emptyOcrMessage;
@@ -145,11 +148,6 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
       return;
     }
 
-    final draft = IngredientConfirmationDraft(
-      rawOcrText: ocrText,
-      parsedIngredients: detectedIngredients,
-      productName: 'เธเธฅเธดเธ•เธ เธฑเธ“เธ‘เนเธเธฒเธเธฃเธนเธเธ เธฒเธ',
-    );
     setState(() {
       _isProcessing = false;
       _errorMessage = null;

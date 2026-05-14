@@ -107,6 +107,10 @@ class ScanResultScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (result.unknownIngredients.isNotEmpty) ...[
+                      const SizedBox(height: 16),
+                      const _UnknownIngredientResultNotice(),
+                    ],
                     const SizedBox(height: 26),
                     _ChipSection(
                       title: 'สารที่ตรงกับโปรไฟล์การแพ้ของคุณ',
@@ -214,6 +218,36 @@ class ScanResultScreen extends StatelessWidget {
       return 'ผลการวิเคราะห์พบสารที่ควรระวัง เช่น $cautions ซึ่งอาจทำให้ผิวแห้งหรือระคายเคืองในบางคน ควรทดสอบก่อนใช้ โดยเฉพาะผู้ที่มีผิวแพ้ง่าย';
     }
     return 'ผลนี้เป็นการประเมินเบื้องต้นจากข้อมูลส่วนผสมที่อ่านได้ ไม่ใช่การยืนยันว่าผลิตภัณฑ์เหมาะกับทุกคน ควรสังเกตอาการผิวเมื่อเริ่มใช้';
+  }
+}
+
+class _UnknownIngredientResultNotice extends StatelessWidget {
+  const _UnknownIngredientResultNotice();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      key: const Key('scanResultUnknownNotice'),
+      color: const Color(0xFFFFF7E8),
+      borderColor: const Color(0xFFFFE0A8),
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.info_outline, color: Color(0xFF9A6500)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'มีบางส่วนผสมที่ยังไม่มีข้อมูลในฐานข้อมูล ผลลัพธ์นี้จึงเป็นการประเมินเบื้องต้นเท่านั้น',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFF735000),
+                height: 1.45,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

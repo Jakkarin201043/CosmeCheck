@@ -9,6 +9,15 @@ import '../state/app_state.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui_components.dart';
 
+const _knownGroupTitle = 'พบในฐานข้อมูล';
+const _unknownGroupTitle = 'ยังไม่มีในฐานข้อมูล';
+const _unknownNote =
+    'ส่วนผสมเหล่านี้ถูกอ่านข้อความได้ แต่ยังไม่มีข้อมูลในฐานข้อมูลของแอพ จึงไม่ควรสรุปว่าปลอดภัยหรืออันตราย';
+const _emptyKnownMessage = 'ยังไม่พบส่วนผสมที่ตรงกับฐานข้อมูล';
+const _emptyUnknownMessage = 'ยังไม่มีส่วนผสมที่อยู่นอกฐานข้อมูล';
+const _addUnknownLabel = 'เพิ่มส่วนผสมเอง';
+const _removeUnknownLabel = 'ลบส่วนผสมนี้';
+
 class ConfirmIngredientsScreen extends StatefulWidget {
   const ConfirmIngredientsScreen({super.key, required this.draft});
 
@@ -21,13 +30,16 @@ class ConfirmIngredientsScreen extends StatefulWidget {
 
 class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
   late final TextEditingController _ingredientController;
-  late final List<String> _ingredients;
+  late final List<Ingredient> _knownIngredients;
+  late final List<String> _unknownIngredientNames;
 
   @override
   void initState() {
     super.initState();
     _ingredientController = TextEditingController();
-    _ingredients = _dedupe(widget.draft.parsedIngredients);
+    final initial = _initialClassification();
+    _knownIngredients = _dedupeKnown(initial.knownIngredients);
+    _unknownIngredientNames = _dedupeUnknown(initial.unknownIngredientNames);
   }
 
   @override
@@ -36,43 +48,93 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
     super.dispose();
   }
 
+  IngredientParseResult _initialClassification() {
+    if (widget.draft.knownIngredients.isNotEmpty ||
+        widget.draft.unknownIngredientNames.isNotEmpty) {
+      return IngredientParseResult(
+        rawIngredientNames: widget.draft.parsedIngredients,
+        knownIngredients: widget.draft.knownIngredients,
+        unknownIngredientNames: widget.draft.unknownIngredientNames,
+      );
+    }
+
+    return IngredientParser.classifyDetectedIngredients(
+      detectedIngredients: widget.draft.parsedIngredients,
+      database: context.read<AppState>().ingredients,
+    );
+  }
+
   void _addIngredient(String value) {
     final parsed = IngredientParser.parse(value);
     if (parsed.isEmpty) {
       return;
     }
 
+    final result = IngredientParser.classifyDetectedIngredients(
+      detectedIngredients: parsed,
+      database: context.read<AppState>().ingredients,
+    );
+
     setState(() {
-      for (final ingredient in parsed) {
-        if (!_containsIngredient(ingredient)) {
-          _ingredients.add(ingredient);
-        }
+      for (final ingredient in result.knownIngredients) {
+        _addKnownIngredient(ingredient);
+      }
+      for (final ingredientName in result.unknownIngredientNames) {
+        _addUnknownIngredient(ingredientName);
       }
       _ingredientController.clear();
     });
   }
 
-  void _removeIngredient(int index) {
-    setState(() => _ingredients.removeAt(index));
+  void _addKnownIngredient(Ingredient ingredient) {
+    if (_knownIngredients.any((item) => item.id == ingredient.id)) {
+      return;
+    }
+    _knownIngredients.add(ingredient);
+    _unknownIngredientNames.removeWhere(
+      (unknown) => IngredientParser.matchesAnyTerm(unknown, ingredient),
+    );
+  }
+
+  void _addUnknownIngredient(String value) {
+    final cleaned = IngredientParser.cleanIngredientName(value);
+    final normalized = IngredientParser.normalize(cleaned);
+    if (normalized.isEmpty || _isKnownTermPresent(cleaned)) {
+      return;
+    }
+    if (_unknownIngredientNames.any(
+      (item) => IngredientParser.normalize(item) == normalized,
+    )) {
+      return;
+    }
+    _unknownIngredientNames.add(cleaned);
+  }
+
+  void _removeKnownIngredient(int index) {
+    setState(() => _knownIngredients.removeAt(index));
+  }
+
+  void _removeUnknownIngredient(int index) {
+    setState(() => _unknownIngredientNames.removeAt(index));
   }
 
   void _analyzeConfirmedIngredients() {
-    if (_ingredients.isEmpty) {
+    if (_knownIngredients.isEmpty && _unknownIngredientNames.isEmpty) {
       return;
     }
 
-    final result = context.read<AppState>().analyzeConfirmedIngredients(
+    final result = context.read<AppState>().analyzeConfirmedIngredientGroups(
       rawOcrText: widget.draft.rawOcrText,
-      ingredients: List.unmodifiable(_ingredients),
+      knownIngredients: List.unmodifiable(_knownIngredients),
+      unknownIngredientNames: List.unmodifiable(_unknownIngredientNames),
       productName: widget.draft.productName,
     );
     context.push('/scan-result', extra: result);
   }
 
-  bool _containsIngredient(String value) {
-    final normalized = IngredientParser.normalize(value);
-    return _ingredients.any(
-      (ingredient) => IngredientParser.normalize(ingredient) == normalized,
+  bool _isKnownTermPresent(String value) {
+    return _knownIngredients.any(
+      (ingredient) => IngredientParser.matchesAnyTerm(value, ingredient),
     );
   }
 
@@ -91,19 +153,14 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
       ingredient.inciName,
       ingredient.thaiName,
       ...ingredient.aliases,
-    ].any(_containsIngredient);
-  }
-
-  List<Ingredient> _knownMatches(String ingredient) {
-    return IngredientParser.matchKnownIngredients(
-      detectedIngredients: [ingredient],
-      database: context.read<AppState>().ingredients,
-    );
+    ].any(_isKnownTermPresent);
   }
 
   @override
   Widget build(BuildContext context) {
-    final canAnalyze = _ingredients.isNotEmpty;
+    final ingredientCount =
+        _knownIngredients.length + _unknownIngredientNames.length;
+    final canAnalyze = ingredientCount > 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -135,7 +192,7 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'ตรวจรายการที่ OCR อ่านได้ ลบส่วนที่ไม่ใช่ส่วนผสม หรือเพิ่มรายการที่อ่านตกหล่น',
+                      'ตรวจรายการที่ OCR อ่านได้ ลบส่วนที่ไม่ใช่ส่วนผสม หรือเพิ่มรายการที่อ่านตกหล่นก่อนวิเคราะห์',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: AppColors.textSecondary,
                         height: 1.45,
@@ -144,30 +201,15 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
                     const SizedBox(height: 18),
                     _RawOcrCard(rawText: widget.draft.rawOcrText),
                     const SizedBox(height: 22),
-                    SectionTitle('ส่วนผสมที่อ่านได้'),
-                    const SizedBox(height: 12),
-                    if (_ingredients.isEmpty)
-                      const _EmptyIngredientNotice()
-                    else
-                      ListView.separated(
-                        key: const Key('confirmedIngredientList'),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _ingredients.length,
-                        separatorBuilder: (_, _) => const SizedBox(height: 10),
-                        itemBuilder: (context, index) {
-                          final ingredient = _ingredients[index];
-                          final knownMatches = _knownMatches(ingredient);
-                          return _IngredientReviewTile(
-                            ingredient: ingredient,
-                            knownMatch: knownMatches.isEmpty
-                                ? null
-                                : knownMatches.first,
-                            onRemove: () => _removeIngredient(index),
-                            removeKey: ValueKey('removeIngredient-$index'),
-                          );
-                        },
-                      ),
+                    _KnownIngredientSection(
+                      ingredients: _knownIngredients,
+                      onRemove: _removeKnownIngredient,
+                    ),
+                    const SizedBox(height: 22),
+                    _UnknownIngredientSection(
+                      ingredientNames: _unknownIngredientNames,
+                      onRemove: _removeUnknownIngredient,
+                    ),
                     const SizedBox(height: 22),
                     _AddIngredientCard(
                       controller: _ingredientController,
@@ -180,7 +222,9 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
             ),
             _AnalyzeBar(
               canAnalyze: canAnalyze,
-              ingredientCount: _ingredients.length,
+              ingredientCount: ingredientCount,
+              knownCount: _knownIngredients.length,
+              unknownCount: _unknownIngredientNames.length,
               onAnalyze: _analyzeConfirmedIngredients,
             ),
           ],
@@ -189,14 +233,25 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
     );
   }
 
-  static List<String> _dedupe(List<String> values) {
+  static List<Ingredient> _dedupeKnown(List<Ingredient> values) {
+    final ids = <String>{};
+    final deduped = <Ingredient>[];
+    for (final ingredient in values) {
+      if (ids.add(ingredient.id)) {
+        deduped.add(ingredient);
+      }
+    }
+    return deduped;
+  }
+
+  static List<String> _dedupeUnknown(List<String> values) {
     final normalized = <String>{};
     final deduped = <String>[];
     for (final value in values) {
-      final trimmed = value.trim();
-      final key = IngredientParser.normalize(trimmed);
-      if (trimmed.isNotEmpty && normalized.add(key)) {
-        deduped.add(trimmed);
+      final cleaned = IngredientParser.cleanIngredientName(value);
+      final key = IngredientParser.normalize(cleaned);
+      if (cleaned.isNotEmpty && normalized.add(key)) {
+        deduped.add(cleaned);
       }
     }
     return deduped;
@@ -254,26 +309,106 @@ class _RawOcrCard extends StatelessWidget {
   }
 }
 
-class _IngredientReviewTile extends StatelessWidget {
-  const _IngredientReviewTile({
+class _KnownIngredientSection extends StatelessWidget {
+  const _KnownIngredientSection({
+    required this.ingredients,
+    required this.onRemove,
+  });
+
+  final List<Ingredient> ingredients;
+  final ValueChanged<int> onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SectionTitle(_knownGroupTitle),
+        const SizedBox(height: 12),
+        if (ingredients.isEmpty)
+          const _EmptyGroupNotice(
+            icon: Icons.search_off_outlined,
+            message: _emptyKnownMessage,
+          )
+        else
+          ListView.separated(
+            key: const Key('knownIngredientList'),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: ingredients.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              return _KnownIngredientReviewTile(
+                ingredient: ingredients[index],
+                onRemove: () => onRemove(index),
+                removeKey: ValueKey('removeKnownIngredient-$index'),
+              );
+            },
+          ),
+      ],
+    );
+  }
+}
+
+class _UnknownIngredientSection extends StatelessWidget {
+  const _UnknownIngredientSection({
+    required this.ingredientNames,
+    required this.onRemove,
+  });
+
+  final List<String> ingredientNames;
+  final ValueChanged<int> onRemove;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SectionTitle(_unknownGroupTitle),
+        const SizedBox(height: 12),
+        const _UnknownNote(),
+        const SizedBox(height: 12),
+        if (ingredientNames.isEmpty)
+          const _EmptyGroupNotice(
+            icon: Icons.check_circle_outline,
+            message: _emptyUnknownMessage,
+          )
+        else
+          ListView.separated(
+            key: const Key('unknownIngredientList'),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: ingredientNames.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              final ingredientName = ingredientNames[index];
+              return _UnknownIngredientReviewTile(
+                ingredientName: ingredientName,
+                onRemove: () => onRemove(index),
+                removeKey: ValueKey('removeUnknownIngredient-$index'),
+              );
+            },
+          ),
+      ],
+    );
+  }
+}
+
+class _KnownIngredientReviewTile extends StatelessWidget {
+  const _KnownIngredientReviewTile({
     required this.ingredient,
-    required this.knownMatch,
     required this.onRemove,
     required this.removeKey,
   });
 
-  final String ingredient;
-  final Ingredient? knownMatch;
+  final Ingredient ingredient;
   final VoidCallback onRemove;
   final Key removeKey;
 
   @override
   Widget build(BuildContext context) {
-    final known = knownMatch != null;
     return Container(
-      key: ValueKey(
-        'ingredientReview-${IngredientParser.normalize(ingredient)}',
-      ),
+      key: ValueKey('knownIngredientReview-${ingredient.id}'),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: AppColors.card,
@@ -282,45 +417,39 @@ class _IngredientReviewTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(
-            key: ValueKey(
-              known
-                  ? 'ingredientKnown-${IngredientParser.normalize(ingredient)}'
-                  : 'ingredientUnknown-${IngredientParser.normalize(ingredient)}',
-            ),
-            known ? Icons.check_circle_outline : Icons.help_outline,
-            color: known ? AppColors.safe : AppColors.textSecondary,
-          ),
+          const Icon(Icons.check_circle_outline, color: AppColors.safe),
           const SizedBox(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  ingredient,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  known
-                      ? 'ตรงกับฐานข้อมูล: ${knownMatch!.name}'
-                      : 'ยังไม่พบในฐานข้อมูล สามารถคงไว้เพื่อวิเคราะห์ข้อความได้',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary,
+            child: InkWell(
+              onTap: () =>
+                  context.push('/ingredient-detail?id=${ingredient.id}'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ingredient.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 3),
+                  Text(
+                    'ตรงกับฐานข้อมูล: ${ingredient.thaiName}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           IconButton(
             key: removeKey,
-            tooltip: 'ลบส่วนผสม',
+            tooltip: 'ลบส่วนผสมนี้',
             onPressed: onRemove,
             icon: const Icon(Icons.close),
             color: AppColors.warningDark,
@@ -331,15 +460,65 @@ class _IngredientReviewTile extends StatelessWidget {
   }
 }
 
-class _EmptyIngredientNotice extends StatelessWidget {
-  const _EmptyIngredientNotice();
+class _UnknownIngredientReviewTile extends StatelessWidget {
+  const _UnknownIngredientReviewTile({
+    required this.ingredientName,
+    required this.onRemove,
+    required this.removeKey,
+  });
+
+  final String ingredientName;
+  final VoidCallback onRemove;
+  final Key removeKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: ValueKey(
+        'unknownIngredientReview-${IngredientParser.normalize(ingredientName)}',
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.help_outline, color: AppColors.textSecondary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              ingredientName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
+            ),
+          ),
+          IconButton(
+            key: removeKey,
+            tooltip: _removeUnknownLabel,
+            onPressed: onRemove,
+            icon: const Icon(Icons.close),
+            color: AppColors.warningDark,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _UnknownNote extends StatelessWidget {
+  const _UnknownNote();
 
   @override
   Widget build(BuildContext context) {
     return AppCard(
       color: const Color(0xFFFFF7E8),
       borderColor: const Color(0xFFFFE0A8),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -347,9 +526,41 @@ class _EmptyIngredientNotice extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'เพิ่มส่วนผสมอย่างน้อย 1 รายการก่อนวิเคราะห์',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              _unknownNote,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: const Color(0xFF735000),
+                height: 1.45,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptyGroupNotice extends StatelessWidget {
+  const _EmptyGroupNotice({required this.icon, required this.message});
+
+  final IconData icon;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      color: const Color(0xFFF8FAFA),
+      borderColor: AppColors.border,
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: AppColors.textSecondary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
                 height: 1.45,
               ),
             ),
@@ -379,7 +590,7 @@ class _AddIngredientCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'เพิ่มส่วนผสม',
+            _addUnknownLabel,
             style: Theme.of(
               context,
             ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
@@ -391,7 +602,7 @@ class _AddIngredientCard extends StatelessWidget {
             textInputAction: TextInputAction.done,
             onSubmitted: onAdd,
             decoration: InputDecoration(
-              hintText: 'เช่น Glycerin, Fragrance',
+              hintText: 'เช่น Glycerin, Caprylyl Glycol',
               suffixIcon: IconButton(
                 key: const Key('addIngredientButton'),
                 tooltip: 'เพิ่มส่วนผสม',
@@ -426,11 +637,15 @@ class _AnalyzeBar extends StatelessWidget {
   const _AnalyzeBar({
     required this.canAnalyze,
     required this.ingredientCount,
+    required this.knownCount,
+    required this.unknownCount,
     required this.onAnalyze,
   });
 
   final bool canAnalyze;
   final int ingredientCount;
+  final int knownCount;
+  final int unknownCount;
   final VoidCallback onAnalyze;
 
   @override
@@ -445,7 +660,9 @@ class _AnalyzeBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '$ingredientCount รายการพร้อมวิเคราะห์',
+            '$ingredientCount รายการพร้อมวิเคราะห์ ($knownCount ในฐานข้อมูล, $unknownCount ยังไม่มีข้อมูล)',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w700,
