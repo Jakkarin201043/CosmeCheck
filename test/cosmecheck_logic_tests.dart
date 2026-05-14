@@ -1,6 +1,7 @@
 import 'package:cosmecheck/data/ingredient_database.dart';
 import 'package:cosmecheck/data/ingredient_repository.dart';
 import 'package:cosmecheck/models/ingredient.dart';
+import 'package:cosmecheck/models/scan_result.dart';
 import 'package:cosmecheck/services/ingredient_parser.dart';
 import 'package:cosmecheck/services/risk_analyzer.dart';
 import 'package:cosmecheck/state/app_state.dart';
@@ -8,6 +9,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  ScanResult sampleResult({
+    String id = 'scan-test-001',
+    String productName = 'Local QA',
+  }) {
+    return ScanResult(
+      id: id,
+      productName: productName,
+      ocrText: 'Ingredients: Glycerin, Mystery Leaf Extract',
+      detectedIngredients: const ['Glycerin', 'Mystery Leaf Extract'],
+      matchedAllergens: const [],
+      helpfulIngredients: const ['Glycerin'],
+      cautionIngredients: const [],
+      unknownIngredients: const ['Mystery Leaf Extract'],
+      riskScore: 1.3,
+      status: 'ปลอดภัยเบื้องต้น',
+      createdAt: DateTime(2026, 5, 14, 12, 30),
+      source: 'camera',
+    );
+  }
+
   Future<List<Ingredient>> loadJsonIngredients() {
     TestWidgetsFlutterBinding.ensureInitialized();
     return const IngredientRepository().loadIngredients();
@@ -21,6 +42,23 @@ void main() {
     expect(ingredients.map((item) => item.id), contains('cetearyl_alcohol'));
     expect(ingredients.every((item) => item.toJson().isNotEmpty), isTrue);
   });
+
+  test(
+    'scan result serializes and restores unknown ingredients and source',
+    () {
+      final result = sampleResult();
+      final restored = ScanResult.fromJson(result.toJson());
+
+      expect(restored.id, result.id);
+      expect(restored.productName, result.productName);
+      expect(restored.detectedIngredients, result.detectedIngredients);
+      expect(restored.unknownIngredients, result.unknownIngredients);
+      expect(restored.riskScore, result.riskScore);
+      expect(restored.status, result.status);
+      expect(restored.createdAt, result.createdAt);
+      expect(restored.source, 'camera');
+    },
+  );
 
   test('ingredient repository searches JSON aliases', () async {
     final ingredients = await loadJsonIngredients();
@@ -244,6 +282,46 @@ void main() {
     expect(withUnknown.riskScore, knownOnly.riskScore);
     expect(withUnknown.cautionIngredients, knownOnly.cautionIngredients);
     expect(withUnknown.matchedAllergens, knownOnly.matchedAllergens);
+  });
+
+  test('app state saves and loads local scan history', () async {
+    SharedPreferences.setMockInitialValues({});
+    final state = AppState();
+    await state.load();
+
+    await state.addScanHistory(sampleResult(productName: 'History QA'));
+
+    final restored = AppState();
+    await restored.load();
+
+    expect(restored.scanHistory, hasLength(1));
+    expect(restored.scanHistory.first.productName, 'History QA');
+    expect(
+      restored.scanHistory.first.unknownIngredients,
+      contains('Mystery Leaf Extract'),
+    );
+    expect(restored.scanHistory.first.source, 'camera');
+  });
+
+  test('app state persists saved products and removes saved product', () async {
+    SharedPreferences.setMockInitialValues({});
+    final state = AppState();
+    await state.load();
+
+    await state.saveProduct(
+      sampleResult(id: 'saved-001', productName: 'Saved QA'),
+    );
+
+    final restored = AppState();
+    await restored.load();
+    expect(restored.savedProducts, hasLength(1));
+    expect(restored.savedProducts.first.productName, 'Saved QA');
+
+    await restored.removeSavedProduct('saved-001');
+
+    final afterRemove = AppState();
+    await afterRemove.load();
+    expect(afterRemove.savedProducts, isEmpty);
   });
 
   test(

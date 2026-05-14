@@ -1,6 +1,7 @@
 import 'package:cosmecheck/app.dart';
 import 'package:cosmecheck/data/ingredient_database.dart';
 import 'package:cosmecheck/models/ingredient_confirmation_draft.dart';
+import 'package:cosmecheck/models/scan_result.dart';
 import 'package:cosmecheck/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,26 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  ScanResult sampleResult({
+    String id = 'widget-scan-001',
+    String productName = 'Widget QA',
+  }) {
+    return ScanResult(
+      id: id,
+      productName: productName,
+      ocrText: 'Ingredients: Glycerin, Mystery Leaf Extract',
+      detectedIngredients: const ['Glycerin', 'Mystery Leaf Extract'],
+      matchedAllergens: const [],
+      helpfulIngredients: const ['Glycerin'],
+      cautionIngredients: const [],
+      unknownIngredients: const ['Mystery Leaf Extract'],
+      riskScore: 1.3,
+      status: 'ปลอดภัยเบื้องต้น',
+      createdAt: DateTime(2026, 5, 14, 12, 30),
+      source: 'gallery',
+    );
+  }
+
   Future<AppState> pumpCosmeCheck(
     WidgetTester tester, {
     Size size = const Size(393, 873),
@@ -91,6 +112,24 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets(
+    'history and saved screens show empty states without local data',
+    (tester) async {
+      await pumpCosmeCheck(tester, size: const Size(393, 873));
+
+      CosmeCheckApp.router.go('/history');
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
+      expect(find.text('ยังไม่มีประวัติการสแกน'), findsOneWidget);
+
+      CosmeCheckApp.router.go('/saved');
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
+      expect(find.text('ยังไม่มีรายการที่บันทึกไว้'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets('mock scan still opens result with expected sections', (
     tester,
   ) async {
@@ -124,7 +163,7 @@ void main() {
   testWidgets('confirm ingredients supports review add remove and analyze', (
     tester,
   ) async {
-    await pumpCosmeCheck(tester, size: const Size(393, 873));
+    final state = await pumpCosmeCheck(tester, size: const Size(393, 873));
 
     CosmeCheckApp.router.go(
       '/confirm-ingredients',
@@ -169,6 +208,8 @@ void main() {
 
     expect(find.textContaining('Fragrance'), findsWidgets);
     expect(find.textContaining('/ 10'), findsOneWidget);
+    expect(state.scanHistory, hasLength(1));
+    expect(state.scanHistory.first.productName, 'QA OCR');
     expect(tester.takeException(), isNull);
   });
 
@@ -305,6 +346,50 @@ void main() {
 
     expect(find.textContaining('Mystery Leaf Extract'), findsWidgets);
     expect(find.byKey(const Key('scanResultUnknownNotice')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('scan result save button persists item on saved screen', (
+    tester,
+  ) async {
+    await pumpCosmeCheck(tester, size: const Size(393, 873));
+
+    CosmeCheckApp.router.go('/scan-result', extra: sampleResult());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    await tester.tap(find.text('บันทึกผลลัพธ์'));
+    await tester.pump();
+
+    CosmeCheckApp.router.go('/saved');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Widget QA'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('saved products screen removes persisted saved item', (
+    tester,
+  ) async {
+    final state = await pumpCosmeCheck(tester, size: const Size(393, 873));
+    await state.saveProduct(
+      sampleResult(id: 'remove-saved', productName: 'Remove QA'),
+    );
+
+    CosmeCheckApp.router.go('/saved');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+    expect(find.text('Remove QA'), findsOneWidget);
+
+    await tester.tap(
+      find.byKey(const ValueKey('removeSavedProduct-remove-saved')),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Remove QA'), findsNothing);
+    expect(find.text('ยังไม่มีรายการที่บันทึกไว้'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }

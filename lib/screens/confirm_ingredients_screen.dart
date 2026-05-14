@@ -32,6 +32,7 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
   late final TextEditingController _ingredientController;
   late final List<Ingredient> _knownIngredients;
   late final List<String> _unknownIngredientNames;
+  bool _isAnalyzing = false;
 
   @override
   void initState() {
@@ -118,17 +119,26 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
     setState(() => _unknownIngredientNames.removeAt(index));
   }
 
-  void _analyzeConfirmedIngredients() {
-    if (_knownIngredients.isEmpty && _unknownIngredientNames.isEmpty) {
+  Future<void> _analyzeConfirmedIngredients() async {
+    if (_isAnalyzing ||
+        (_knownIngredients.isEmpty && _unknownIngredientNames.isEmpty)) {
       return;
     }
 
-    final result = context.read<AppState>().analyzeConfirmedIngredientGroups(
-      rawOcrText: widget.draft.rawOcrText,
-      knownIngredients: List.unmodifiable(_knownIngredients),
-      unknownIngredientNames: List.unmodifiable(_unknownIngredientNames),
-      productName: widget.draft.productName,
-    );
+    setState(() => _isAnalyzing = true);
+    final result = await context
+        .read<AppState>()
+        .analyzeAndSaveConfirmedIngredientGroups(
+          rawOcrText: widget.draft.rawOcrText,
+          knownIngredients: List.unmodifiable(_knownIngredients),
+          unknownIngredientNames: List.unmodifiable(_unknownIngredientNames),
+          productName: widget.draft.productName,
+          source: widget.draft.source,
+        );
+    if (!mounted) {
+      return;
+    }
+    setState(() => _isAnalyzing = false);
     context.push('/scan-result', extra: result);
   }
 
@@ -221,7 +231,7 @@ class _ConfirmIngredientsScreenState extends State<ConfirmIngredientsScreen> {
               ),
             ),
             _AnalyzeBar(
-              canAnalyze: canAnalyze,
+              canAnalyze: canAnalyze && !_isAnalyzing,
               ingredientCount: ingredientCount,
               knownCount: _knownIngredients.length,
               unknownCount: _unknownIngredientNames.length,
@@ -646,7 +656,7 @@ class _AnalyzeBar extends StatelessWidget {
   final int ingredientCount;
   final int knownCount;
   final int unknownCount;
-  final VoidCallback onAnalyze;
+  final Future<void> Function() onAnalyze;
 
   @override
   Widget build(BuildContext context) {
@@ -673,7 +683,7 @@ class _AnalyzeBar extends StatelessWidget {
             width: double.infinity,
             child: FilledButton.icon(
               key: const Key('analyzeConfirmedIngredientsButton'),
-              onPressed: canAnalyze ? onAnalyze : null,
+              onPressed: canAnalyze ? () => onAnalyze() : null,
               icon: const Icon(Icons.analytics_outlined),
               label: const Text('วิเคราะห์'),
               style: FilledButton.styleFrom(

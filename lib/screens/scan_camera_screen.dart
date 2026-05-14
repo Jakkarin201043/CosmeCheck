@@ -35,6 +35,7 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
   String? _noticeMessage;
   String? _lastRawOcrText;
   String? _pendingDebugOcrText;
+  String _pendingDebugSource = 'ocr';
 
   Future<void> _pickImageAndAnalyze(ImageSource source) async {
     if (_isProcessing) {
@@ -46,6 +47,7 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
       _noticeMessage = null;
       _lastRawOcrText = null;
       _pendingDebugOcrText = null;
+      _pendingDebugSource = 'ocr';
     });
 
     XFile? image;
@@ -76,10 +78,10 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
       return;
     }
 
-    await _analyzePickedImage(image);
+    await _analyzePickedImage(image, _sourceName(source));
   }
 
-  Future<void> _analyzePickedImage(XFile image) async {
+  Future<void> _analyzePickedImage(XFile image, String source) async {
     try {
       setState(() => _isProcessing = true);
 
@@ -102,11 +104,12 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
           _isProcessing = false;
           _lastRawOcrText = ocrText;
           _pendingDebugOcrText = ocrText;
+          _pendingDebugSource = source;
         });
         return;
       }
 
-      _analyzeRecognizedText(ocrText);
+      _analyzeRecognizedText(ocrText, source: source);
     } catch (_) {
       if (!mounted) {
         return;
@@ -129,14 +132,19 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
     if (ocrText == null) {
       return;
     }
-    _analyzeRecognizedText(ocrText);
+    _analyzeRecognizedText(ocrText, source: _pendingDebugSource);
   }
 
-  void _analyzeRecognizedText(String ocrText) {
+  String _sourceName(ImageSource source) {
+    return source == ImageSource.camera ? 'camera' : 'gallery';
+  }
+
+  void _analyzeRecognizedText(String ocrText, {required String source}) {
     final draft = IngredientConfirmationDraft.fromOcrText(
       rawOcrText: ocrText,
       database: context.read<AppState>().ingredients,
       productName: 'ผลิตภัณฑ์จากรูปภาพ',
+      source: source,
     );
 
     if (draft.parsedIngredients.isEmpty) {
@@ -154,6 +162,7 @@ class _ScanCameraScreenState extends State<ScanCameraScreen> {
       _noticeMessage = null;
       _lastRawOcrText = null;
       _pendingDebugOcrText = null;
+      _pendingDebugSource = 'ocr';
     });
 
     if (!mounted) {

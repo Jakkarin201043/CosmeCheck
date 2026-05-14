@@ -10,6 +10,7 @@ class RiskAnalyzer {
     required String skinType,
     required List<Ingredient> ingredientDatabase,
     String productName = 'ผลิตภัณฑ์จากการสแกน',
+    String source = 'scan',
   }) {
     final knownIngredients = IngredientParser.matchKnownIngredients(
       detectedIngredients: detectedIngredients,
@@ -48,6 +49,7 @@ class RiskAnalyzer {
       riskScore: riskScore,
       status: _statusForScore(riskScore),
       createdAt: DateTime.now(),
+      source: source,
     );
   }
 

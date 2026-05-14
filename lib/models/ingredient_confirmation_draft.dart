@@ -8,12 +8,14 @@ class IngredientConfirmationDraft {
     this.parsedIngredients = const [],
     this.knownIngredients = const [],
     this.unknownIngredientNames = const [],
+    this.source = 'ocr',
   });
 
   factory IngredientConfirmationDraft.fromOcrText({
     required String rawOcrText,
     required List<Ingredient> database,
     required String productName,
+    String source = 'ocr',
   }) {
     final result = IngredientParser.parseForConfirmation(
       rawText: rawOcrText,
@@ -26,6 +28,7 @@ class IngredientConfirmationDraft {
       parsedIngredients: result.rawIngredientNames,
       knownIngredients: result.knownIngredients,
       unknownIngredientNames: result.unknownIngredientNames,
+      source: source,
     );
   }
 
@@ -34,4 +37,5 @@ class IngredientConfirmationDraft {
   final List<Ingredient> knownIngredients;
   final List<String> unknownIngredientNames;
   final String productName;
+  final String source;
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-import '../data/mock_scan_history.dart';
 import '../models/scan_result.dart';
+import '../state/app_state.dart';
 import '../theme/app_theme.dart';
 import '../widgets/ui_components.dart';
 
@@ -10,17 +12,101 @@ class ScanHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final history = context.watch<AppState>().scanHistory;
+
     return Scaffold(
       appBar: AppBar(title: const Text('ประวัติการสแกน')),
       body: SafeArea(
-        child: ListView.separated(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
-          itemCount: MockScanHistory.items.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 14),
-          itemBuilder: (context, index) {
-            return _HistoryTile(result: MockScanHistory.items[index]);
-          },
+        child: history.isEmpty
+            ? const _EmptyHistoryState()
+            : ListView.separated(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+                itemCount: history.length + 1,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 14),
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return const _HistoryLocalNote();
+                  }
+                  return _HistoryTile(result: history[index - 1]);
+                },
+              ),
+      ),
+    );
+  }
+}
+
+class _EmptyHistoryState extends StatelessWidget {
+  const _EmptyHistoryState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 76,
+              height: 76,
+              decoration: BoxDecoration(
+                color: AppColors.softBlue,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: const Icon(
+                Icons.history_outlined,
+                color: AppColors.primaryDark,
+                size: 38,
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
+              'ยังไม่มีประวัติการสแกน',
+              textAlign: TextAlign.center,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'เมื่อวิเคราะห์ส่วนผสมจากกล้องหรือรูปภาพ รายการล่าสุดจะบันทึกไว้ในเครื่องนี้',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
+                height: 1.45,
+              ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _HistoryLocalNote extends StatelessWidget {
+  const _HistoryLocalNote();
+
+  @override
+  Widget build(BuildContext context) {
+    return AppCard(
+      color: const Color(0xFFF1F7F8),
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.lock_outline, color: AppColors.primaryDark),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'ประวัตินี้บันทึกไว้ในเครื่องของคุณเท่านั้น',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.textSecondary,
+                height: 1.45,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -35,6 +121,7 @@ class _HistoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final date = _thaiDate(result.createdAt);
     return AppCard(
+      onTap: () => context.push('/scan-result', extra: result),
       child: Row(
         children: [
           Container(
@@ -79,6 +166,19 @@ class _HistoryTile extends StatelessWidget {
                         color: AppColors.textSecondary,
                       ),
                     ),
+                    Text(
+                      '${result.detectedIngredients.length} ส่วนผสม',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    if (result.unknownIngredients.isNotEmpty)
+                      Text(
+                        '${result.unknownIngredients.length} ยังไม่มีข้อมูล',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,

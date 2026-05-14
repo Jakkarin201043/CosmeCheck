@@ -268,14 +268,17 @@ class _ResultActions extends StatelessWidget {
         builder: (context, constraints) {
           final stackButtons = constraints.maxWidth < 340;
           final saveButton = PrimaryButton(
-            label: 'บันทึกสินค้า',
+            label: 'บันทึกผลลัพธ์',
             icon: Icons.bookmark_border,
             filled: false,
-            onPressed: () {
-              context.read<AppState>().saveProduct(result);
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('บันทึกสินค้าแล้ว')));
+            onPressed: () async {
+              await context.read<AppState>().saveProduct(result);
+              if (!context.mounted) {
+                return;
+              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('บันทึกผลลัพธ์แล้ว')),
+              );
             },
           );
           final detailButton = PrimaryButton(
