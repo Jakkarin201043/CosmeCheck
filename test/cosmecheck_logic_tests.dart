@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cosmecheck/data/ingredient_database.dart';
 import 'package:cosmecheck/data/ingredient_repository.dart';
 import 'package:cosmecheck/models/ingredient.dart';
@@ -5,10 +7,13 @@ import 'package:cosmecheck/models/scan_result.dart';
 import 'package:cosmecheck/services/ingredient_parser.dart';
 import 'package:cosmecheck/services/risk_analyzer.dart';
 import 'package:cosmecheck/state/app_state.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   ScanResult sampleResult({
     String id = 'scan-test-001',
     String productName = 'Local QA',
@@ -34,12 +39,53 @@ void main() {
     return const IngredientRepository().loadIngredients();
   }
 
-  test('ingredient repository loads all 30 JSON ingredients', () async {
+  test('ingredient JSON asset parses as 100 complete unique records', () async {
+    final rawJson = await rootBundle.loadString('assets/data/ingredients.json');
+    final decoded = jsonDecode(rawJson);
+
+    expect(decoded, isA<List<dynamic>>());
+
+    final records = decoded as List<dynamic>;
+    const requiredFields = {
+      'id',
+      'name',
+      'thaiName',
+      'inciName',
+      'aliases',
+      'category',
+      'tag',
+      'riskLevel',
+      'shortDescription',
+      'whatIsIt',
+      'benefits',
+      'cautions',
+      'suitableFor',
+      'avoidIf',
+      'commonIn',
+      'mythVsFact',
+      'references',
+    };
+
+    expect(records, hasLength(100));
+    expect(
+      records.whereType<Map<String, dynamic>>().every(
+        (record) => record.keys.toSet().containsAll(requiredFields),
+      ),
+      isTrue,
+    );
+    expect(
+      records.map((record) => (record as Map<String, dynamic>)['id']).toSet(),
+      hasLength(100),
+    );
+  });
+
+  test('ingredient repository loads all 100 JSON ingredients', () async {
     final ingredients = await loadJsonIngredients();
 
-    expect(ingredients, hasLength(30));
+    expect(ingredients, hasLength(100));
     expect(ingredients.map((item) => item.id), contains('fragrance_parfum'));
     expect(ingredients.map((item) => item.id), contains('cetearyl_alcohol'));
+    expect(ingredients.map((item) => item.id), contains('bakuchiol'));
     expect(ingredients.every((item) => item.toJson().isNotEmpty), isTrue);
   });
 
@@ -67,6 +113,51 @@ void main() {
     expect(results.map((item) => item.name), contains('Niacinamide'));
   });
 
+  test(
+    'ingredient repository searches name, Thai name, INCI, and aliases',
+    () async {
+      final ingredients = await loadJsonIngredients();
+      final bakuchiol = ingredients.firstWhere(
+        (item) => item.id == 'bakuchiol',
+      );
+      final peptide = ingredients.firstWhere(
+        (item) => item.id == 'peptide_complex',
+      );
+      final dipropyleneGlycol = ingredients.firstWhere(
+        (item) => item.id == 'dipropylene_glycol',
+      );
+
+      expect(
+        IngredientRepository.search(
+          ingredients,
+          bakuchiol.name,
+        ).map((item) => item.id),
+        contains('bakuchiol'),
+      );
+      expect(
+        IngredientRepository.search(
+          ingredients,
+          bakuchiol.thaiName,
+        ).map((item) => item.id),
+        contains('bakuchiol'),
+      );
+      expect(
+        IngredientRepository.search(
+          ingredients,
+          dipropyleneGlycol.inciName,
+        ).map((item) => item.id),
+        contains('dipropylene_glycol'),
+      );
+      expect(
+        IngredientRepository.search(
+          ingredients,
+          peptide.aliases.first,
+        ).map((item) => item.id),
+        contains('peptide_complex'),
+      );
+    },
+  );
+
   test('ingredient repository maps Fragrance and Parfum searches', () async {
     final ingredients = await loadJsonIngredients();
     final fragranceResults = IngredientRepository.search(
@@ -80,6 +171,16 @@ void main() {
       contains('fragrance_parfum'),
     );
     expect(parfumResults.map((item) => item.id), contains('fragrance_parfum'));
+    expect(
+      ingredients
+          .where(
+            (item) =>
+                IngredientParser.normalize(item.name).contains('fragrance') ||
+                IngredientParser.normalize(item.name).contains('parfum'),
+          )
+          .map((item) => item.id),
+      ['fragrance_parfum'],
+    );
   });
 
   test(
@@ -116,6 +217,22 @@ void main() {
       expect(
         genericAlcoholMatch.map((item) => item.id),
         isNot(contains('alcohol_denat')),
+      );
+      expect(
+        ingredients
+            .firstWhere((item) => item.id == 'cetearyl_alcohol')
+            .riskLevel,
+        'low',
+      );
+      expect(
+        ingredients.firstWhere((item) => item.id == 'cetyl_alcohol').riskLevel,
+        'low',
+      );
+      expect(
+        ingredients
+            .firstWhere((item) => item.id == 'stearyl_alcohol')
+            .riskLevel,
+        'low',
       );
     },
   );
@@ -246,13 +363,18 @@ void main() {
 
       expect(
         result.knownIngredients.map((item) => item.name),
-        containsAll(['Glycerin', 'Niacinamide', 'Fragrance / Parfum']),
+        containsAll([
+          'Glycerin',
+          'Niacinamide',
+          'Caprylyl Glycol',
+          'Fragrance / Parfum',
+        ]),
       );
       expect(
         result.unknownIngredientNames,
-        containsAll(['Water', 'Caprylyl Glycol', 'Mystery Leaf Extract']),
+        containsAll(['Water', 'Mystery Leaf Extract']),
       );
-      expect(result.unknownIngredientNames, hasLength(3));
+      expect(result.unknownIngredientNames, hasLength(2));
     },
   );
 
@@ -282,6 +404,35 @@ void main() {
     expect(withUnknown.riskScore, knownOnly.riskScore);
     expect(withUnknown.cautionIngredients, knownOnly.cautionIngredients);
     expect(withUnknown.matchedAllergens, knownOnly.matchedAllergens);
+  });
+
+  test('unknown ingredients still work with 100 item database', () async {
+    final ingredients = await loadJsonIngredients();
+    final result = IngredientParser.parseForConfirmation(
+      rawText: 'Ingredients: Bakuchiol, Mystery Cloud Extract',
+      database: ingredients,
+    );
+
+    expect(
+      result.knownIngredients.map((item) => item.id),
+      contains('bakuchiol'),
+    );
+    expect(result.unknownIngredientNames, contains('Mystery Cloud Extract'));
+
+    final analysis = RiskAnalyzer.analyze(
+      ocrText: 'Bakuchiol, Mystery Cloud Extract',
+      detectedIngredients: result.confirmedIngredientNames,
+      allergens: const [],
+      skinType: 'เธเธดเธงเธเธชเธก',
+      ingredientDatabase: ingredients,
+    );
+
+    expect(analysis.helpfulIngredients, contains('Bakuchiol'));
+    expect(analysis.unknownIngredients, contains('Mystery Cloud Extract'));
+    expect(
+      analysis.cautionIngredients,
+      isNot(contains('Mystery Cloud Extract')),
+    );
   });
 
   test('app state saves and loads local scan history', () async {

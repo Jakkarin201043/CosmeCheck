@@ -25,7 +25,13 @@ class IngredientRepository {
 
     try {
       final bundle = _assetBundle ?? rootBundle;
-      final rawJson = await bundle.loadString(assetPath);
+      final assetBytes = await bundle.load(assetPath);
+      final rawJson = utf8.decode(
+        assetBytes.buffer.asUint8List(
+          assetBytes.offsetInBytes,
+          assetBytes.lengthInBytes,
+        ),
+      );
       final decoded = jsonDecode(rawJson);
       if (decoded is! List) {
         _cachedIngredients = IngredientDatabase.ingredients;

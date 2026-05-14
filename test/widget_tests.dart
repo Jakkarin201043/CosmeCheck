@@ -5,10 +5,13 @@ import 'package:cosmecheck/models/scan_result.dart';
 import 'package:cosmecheck/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   ScanResult sampleResult({
     String id = 'widget-scan-001',
     String productName = 'Widget QA',
@@ -40,6 +43,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     SharedPreferences.setMockInitialValues({});
+    GoogleFonts.config.allowRuntimeFetching = false;
     CosmeCheckApp.resetRouterForTesting();
     final state = AppState();
     await state.load();
@@ -109,6 +113,40 @@ void main() {
     await tester.pump();
 
     expect(find.byIcon(Icons.search_off_outlined), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('ingredient search finds a 100 item database addition', (
+    tester,
+  ) async {
+    final state = await pumpCosmeCheck(tester, size: const Size(393, 873));
+    expect(state.ingredients, hasLength(100));
+
+    CosmeCheckApp.router.go('/ingredients');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    await tester.enterText(find.byType(TextField), 'Bakuchiol');
+    await tester.pump();
+
+    expect(find.text('Bakuchiol'), findsWidgets);
+    expect(find.textContaining('Bakuchiol Extract'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('ingredient detail opens a 100 item database addition', (
+    tester,
+  ) async {
+    final state = await pumpCosmeCheck(tester, size: const Size(393, 873));
+    expect(state.ingredients.map((item) => item.id), contains('bakuchiol'));
+
+    CosmeCheckApp.router.go('/ingredient-detail?id=bakuchiol');
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Bakuchiol'), findsOneWidget);
+    expect(find.text('Bakuchiol Extract'), findsOneWidget);
+    expect(find.textContaining('Anti-aging'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
