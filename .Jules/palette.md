@@ -1,0 +1,3 @@
+## 2024-05-14 - Icon and Single-Character Button Accessibility
+**Learning:** Icon-only buttons (like a visibility toggle) or single-character buttons (like a 'G' for Google sign-in) are often announced poorly or confusingly by screen readers because they lack descriptive text context. Just having visual icons or generic characters is insufficient for users relying on assistive technologies.
+**Action:** Always add a descriptive `aria-label` directly on the `<button>` element (e.g., `aria-label="Toggle password visibility"`). Furthermore, to prevent screen readers from reading the generic visual content inside (the icon name or the single letter), set `aria-hidden="true"` on the inner `<span>` that contains the icon or character.
