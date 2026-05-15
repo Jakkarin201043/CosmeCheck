@@ -1,0 +1,3 @@
+## 2026-05-15 - Icon-Only & Single-Character Button Accessibility
+**Learning:** Screen readers often read out literal characters or icon text (e.g. 'G', 'ios', 'visibility_off') for buttons without text. Adding an `aria-label` to the `<button>` and `aria-hidden="true"` to the internal `<span>` containing the character or icon explicitly defines the button's action and hides the confusing content. This is essential for components like social sign-in buttons or visibility toggles.
+**Action:** Always add descriptive `aria-label` attributes to `<button>` tags that lack visible text, and set `aria-hidden="true"` on any child elements containing single characters or icons intended for visual presentation only.
