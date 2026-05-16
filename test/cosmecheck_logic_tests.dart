@@ -77,6 +77,25 @@ void main() {
       records.map((record) => (record as Map<String, dynamic>)['id']).toSet(),
       hasLength(100),
     );
+    expect(
+      rawJson,
+      isNot(
+        anyOf([
+          contains('รักษาสิว'),
+          contains('รักษาฝ้า'),
+          contains('รักษาโรค'),
+          contains('วินิจฉัย'),
+          contains('diagnose'),
+          contains('treat disease'),
+          contains('cure'),
+          contains('prevent disease'),
+          contains('100% safe'),
+          contains('100% dangerous'),
+          contains('ปลอดภัย 100'),
+          contains('อันตราย 100'),
+        ]),
+      ),
+    );
   });
 
   test('ingredient repository loads all 100 JSON ingredients', () async {

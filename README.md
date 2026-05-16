@@ -34,7 +34,7 @@ flutter build apk --debug
 Debug APK output:
 
 ```text
-build\app\outputs\flutter-apk\app-debug.apk
+E:\CosmeCheck\CosmeCheck\stitch_cosmecheck_skincare_ui_showcase\build\app\outputs\flutter-apk\app-debug.apk
 ```
 
 ## Manual QA Checklist

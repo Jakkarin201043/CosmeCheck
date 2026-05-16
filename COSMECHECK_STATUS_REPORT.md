@@ -1,63 +1,76 @@
-# CosmeCheck Project Status Report
+# CosmeCheck Status Report
 
-Generated: 2026-05-15
+Generated: 2026-05-16
 
-## Task Completed
-- QA review of `assets/data/ingredients.json` (100-item offline ingredient database)
-- Verification suite executed for safe shutdown
+## Current Status
+- Pre-QA offline MVP is implemented for Android debug testing.
+- The validated 100-item ingredient JSON source was found at `C:\Users\wenru\ai-workspace\hermes-agent-setup\hermes-agent\ingredients.json`.
+- `assets/data/ingredients.json` now contains exactly 100 local/offline ingredient records with 100 unique IDs.
+- Pre-QA wording polish removed medical-style overclaim phrasing from the JSON while preserving the schema and cautious Thai wording.
+- Ingredient Search, Ingredient Detail, Confirm Ingredients, and RiskAnalyzer use the local JSON-backed ingredient database.
+- Static mock fallback data remains available if asset loading fails.
+
+## Verified App Flow
+- Camera OCR: captured label image -> Confirm Ingredients -> Scan Result.
+- Gallery OCR: selected image -> Confirm Ingredients -> Scan Result.
+- Confirm Ingredients supports known and unknown ingredient review, add, remove, and analyze.
+- Unknown ingredients are carried to Scan Result with a neutral note and are not judged safe or dangerous.
+- Local History and Saved Products persist with `shared_preferences`.
+- Mock fallback still opens a sample Scan Result for regression testing.
+
+## Ingredient Database Checks
+- JSON starts with `[` and ends with `]`.
+- Exactly 100 ingredient objects.
+- All required fields are present.
+- IDs are unique.
+- Fragrance and Parfum are represented by one `fragrance_parfum` record with aliases.
+- Hyaluronic Acid and Sodium Hyaluronate are separate related records.
+- Alcohol Denat., Ethanol, and SD Alcohol are caution/drying alcohol records.
+- Cetearyl Alcohol, Cetyl Alcohol, and Stearyl Alcohol are separate fatty alcohol records and remain low risk.
+- No legacy app-name text found.
+- No absolute 100-percent risk claims found.
 
 ## Files Changed
-- No source code changes were made during this session.
-- Temporary QA analysis files created (untracked):
-  - `qa_analysis.txt`
-  - `qa_analysis2.txt`
-  - `qa_analysis3.txt`
+- `assets/data/ingredients.json`
+- `test/cosmecheck_logic_tests.dart`
+- `README.md`
+- `COSMECHECK_STATUS_REPORT.md`
 
 ## Verification Results
 
-| Step | Command | Result |
-|------|---------|--------|
-| 1 | `flutter pub get` | ✅ Passed |
-| 2 | `dart format lib test` | ✅ Passed (0 files changed) |
-| 3 | `flutter analyze` | ✅ Passed (No issues found) |
-| 4 | `flutter test` | ✅ Passed (40/40 tests passed) |
-| 5 | `flutter build apk --debug` | ✅ Passed |
-
-## Test Count
-- **40 tests passed** (0 failed)
-- Coverage: onboarding, routing, ingredient search, ingredient detail, history, saved products, mock scan, confirm ingredients, deduplication, JSON parsing, repository loading, alias search, risk analyzer, OCR parser, app state persistence, allergy profile
+| Command | Result |
+| --- | --- |
+| `flutter pub get` | Passed |
+| `dart format lib test` | Passed, 0 files changed |
+| `flutter analyze` | Passed, no issues found |
+| `flutter test` | Passed, 40/40 tests |
+| `flutter build apk --debug` | Passed |
 
 ## APK Path
-- `build\app\outputs\flutter-apk\app-debug.apk`
+`E:\CosmeCheck\CosmeCheck\stitch_cosmecheck_skincare_ui_showcase\build\app\outputs\flutter-apk\app-debug.apk`
 
-## Git Status
-- Branch: `master`
-- Working tree: clean (no modified/staged source files)
-- Latest commit: `21f04b5`
+## Known Limitations
+- No backend.
+- No cloud sync.
+- No Firebase.
+- No Supabase.
+- No AI API.
+- No live camera preview or real-time OCR.
+- OCR quality depends on image clarity, lighting, and physical-device behavior.
+- Physical Android device QA is still required before broader release.
 
-## Latest Commit Hash
+## Latest Commit Guidance
+Recommended next commands:
+
+```powershell
+cd E:\CosmeCheck\CosmeCheck\stitch_cosmecheck_skincare_ui_showcase
+git status
+git add .
+git commit -m "Complete pre-QA offline MVP with 100 ingredient database"
+git branch -f stable-pre-qa-offline-mvp
+git log --oneline -5
+git status
 ```
-21f04b5227b34416b439332858aaaf9ccc484276
-```
-
-## Known Limitations (from QA Review)
-1. **Medical overclaiming (P1):** `azelaic_acid`, `mandelic_acid`, `kojic_acid` use the word "รักษา" (treat/cure) which may violate cosmetic labeling regulations.
-2. **Fearmongering (P1):** Fragrance allergens (`limonene`, `linalool`, `citral`, `geraniol`) are tagged `หลีกเลี่ยง` + `high` — too aggressive for general users.
-3. **Duplicate aliases (P1):** `centella_asiatica` and `centella_asiatica_extract` share overlapping aliases (`Gotu Kola`, `Madecassoside`).
-4. **Redundant alias:** `phenoxyethanol` lists itself in aliases.
-5. **Niacinamide duplicate-ish:** `niacinamide_10` is the same ingredient as `niacinamide` at a specific concentration.
 
 ## Next Recommended Step
-1. Fix P1 issues in `assets/data/ingredients.json` before production release:
-   - Replace "รักษาสิว" → "ลดสิว" / "ช่วยลดการเกิดสิว"
-   - Replace "รักษาฝ้า" → "ปรับสีผิวที่มีฝ้า"
-   - Change fragrance allergens tag from `หลีกเลี่ยง/high` → `ควรระวัง/medium`
-   - Merge or disambiguate `centella_asiatica` vs `centella_asiatica_extract`
-2. Run verification suite again after JSON edits.
-3. Proceed to Codex integration or release build.
-
-## Shutdown Status
-- ✅ All verification passed
-- ✅ No uncommitted code changes
-- ✅ Status report written
-- 🔄 Shutdown scheduled
+Run the Android real-device manual QA checklist from `README.md` against the debug APK.
