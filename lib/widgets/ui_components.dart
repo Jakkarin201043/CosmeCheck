@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 const medicalDisclaimer =
-    'ข้อมูลเพื่อการให้ความรู้ ไม่ใช่การวินิจฉัยโรค หากมีอาการผิดปกติ ควรปรึกษาแพทย์ผิวหนัง';
+    'ข้อมูลนี้ใช้เพื่อการให้ความรู้และประเมินเบื้องต้นเท่านั้น ไม่ใช่การวินิจฉัยโรค หากมีอาการผิดปกติควรปรึกษาแพทย์ผิวหนัง';
 
 class ScreenPadding extends StatelessWidget {
   const ScreenPadding({super.key, required this.child});
