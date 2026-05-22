@@ -1,0 +1,3 @@
+## 2024-05-14 - Interactive Icon Accessibility and Password Autofill
+**Learning:** Icon-only buttons (like password visibility toggles and social sign-ins) consistently lack `aria-label`s, causing confusing screen reader experiences. Furthermore, login forms often miss critical attributes (`id`, `name`, `autocomplete`, and `type="submit"`) which breaks password manager autofill and "Enter to submit" functionality.
+**Action:** When auditing forms, prioritize establishing proper semantic relationships (label `for` to input `id`), enabling password manager compatibility (`autocomplete` attributes), and ensuring all interactive icon elements have descriptive `aria-label`s with their decorative icons hidden via `aria-hidden="true"`.
