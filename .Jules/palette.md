@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessibility for Icon-Only Buttons and Forms
+**Learning:** Found several single-character and icon-only buttons (like social login, or toggle password visibility) lacking ARIA labels, causing screen readers to announce unhelpful content like "G" or "visibility off". Additionally, primary actions like "Sign In" were missing `type="submit"`, preventing keyboard submission via "Enter".
+**Action:** Always add descriptive `aria-label` to single-character/icon-only `<button>` elements, and set `aria-hidden="true"` on the internal span containing the icon or character to prevent confusing screen reader announcements. For forms, ensure the primary action button explicitly uses `type="submit"`.
