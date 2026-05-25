@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessible Authentication Forms
+**Learning:** It's critical to ensure primary form action buttons use `type="submit"` rather than `type="button"` to allow users to naturally submit forms using the 'Enter' key. Furthermore, icon-only or single-character buttons (like visibility toggles and social logins) must have descriptive `aria-label` attributes on the `<button>` and `aria-hidden="true"` on the internal icon or text `<span>` to prevent redundant or confusing screen reader announcements.
+**Action:** Always verify form submit buttons are native `type="submit"`. Always add explicit `aria-label`s to visually ambiguous buttons and hide their decorative internals from screen readers.
