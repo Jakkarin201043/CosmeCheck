@@ -1,0 +1,3 @@
+## 2024-05-24 - Form Submission & Keyboard Accessibility
+**Learning:** Native form submission is critical for keyboard accessibility. If a form uses a `<button type="button">` for its primary action without proper JS event handling for the "Enter" key on inputs, keyboard-only users and screen readers face significant friction. Also, proper labeling and autocomplete attributes significantly improve the experience for cognitive accessibility and screen reader users.
+**Action:** Always ensure primary action buttons in forms use `type="submit"` and the form has a `method` defined. Link `<label>` elements to `<input>` fields using `for` and `id` attributes. Add descriptive `aria-label` to icon-only buttons.
