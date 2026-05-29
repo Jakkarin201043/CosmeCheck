@@ -1,0 +1,3 @@
+## 2024-03-24 - Accessible Authentication Forms
+**Learning:** Icon-only buttons (like password visibility toggles and social login) often lack `aria-label` and `aria-hidden` attributes, confusing screen readers. Additionally, forms without `method="POST"`, missing CSRF tokens, unlinked labels/inputs, missing `name` and `autocomplete` attributes, and `type="button"` for submit actions hinder both accessibility and usability (e.g., inability to press Enter to submit).
+**Action:** Always ensure auth forms have `method="POST"`, hidden CSRF tokens, explicitly linked labels/inputs (`for`/`id`), correct `name`/`autocomplete` attributes, `type="submit"` for primary buttons, and `aria-label` alongside `aria-hidden="true"` for icon-only elements.
