@@ -1,0 +1,3 @@
+## 2024-05-31 - Improved Authentication Form Accessibility
+**Learning:** Authentication forms in this application frequently relied on `type="button"` for submission, preventing native keyboard (Enter key) submission. Furthermore, inputs lacked explicit `id` to `for` label linkage and `name`/`autocomplete` attributes, degrading the screen reader experience. Icon-only social login buttons also lacked `aria-label`s.
+**Action:** Always ensure primary action buttons in forms use `type="submit"` and add explicit `for` attributes to labels linking to input `id`s. When updating forms on this site, remember to add `name` and `autocomplete` attributes. Apply `aria-label` to icon-only buttons and `aria-hidden="true"` to their inner icons.
