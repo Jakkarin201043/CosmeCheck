@@ -1,0 +1,3 @@
+## 2024-06-01 - Enhance Form Submission Accessibility
+**Learning:** Native form submission behavior via the Enter key is critical for a smooth user experience and accessibility, which requires primary form action buttons to have `type="submit"` rather than relying solely on JavaScript with `type="button"`. Also, icon-only buttons need descriptive `aria-label` attributes and `aria-hidden="true"` on their child text nodes for proper screen reader support.
+**Action:** Always ensure that interactive forms use proper semantic HTML (`type="submit"`) to enable default keyboard behaviors, set `onsubmit` correctly to prevent unwanted reloads in single-page/static applications, and add robust ARIA labels for any non-text buttons.
