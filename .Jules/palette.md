@@ -1,0 +1,3 @@
+## 2024-10-24 - Screen Reader Friendly Icon Buttons
+**Learning:** Found several icon-only buttons (like password visibility toggle and social login buttons) that relied solely on raw icon text or generic characters (e.g., "visibility_off" or "G") inside `<span>` elements. Without `aria-label` on the button and `aria-hidden="true"` on the icon itself, screen readers announce this raw content, creating a confusing experience for assistive tech users.
+**Action:** When adding or reviewing icon-only buttons, always ensure the `<button>` element has a descriptive `aria-label` and the internal icon/text `<span>` has `aria-hidden="true"` so its generic content is ignored by screen readers.
