@@ -1,0 +1,3 @@
+## 2025-01-08 - Accessible Forms and Icon Buttons
+**Learning:** In static HTML applications missing modern JS frameworks, users rely on native browser behavior. Forms missing `type="submit"` buttons break the standard "press Enter to submit" interaction. Furthermore, icon-only buttons for social logins or visibility toggles are completely invisible to screen readers without proper ARIA labels and hiding the inner decorative icon/text.
+**Action:** Always ensure main action buttons inside forms are set to `type="submit"`, inputs are properly linked to labels via `id`/`for` attributes, and icon-only buttons have descriptive `aria-label` attributes with their internal decorative content hidden from screen readers using `aria-hidden="true"`.
