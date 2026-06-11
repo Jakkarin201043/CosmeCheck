@@ -1,0 +1,3 @@
+## 2024-11-20 - Forms and Icon-only Buttons
+**Learning:** For seamless user experiences across devices, form action buttons must be `type="submit"` instead of relying on generic button clicks. Additionally, icon-only buttons need descriptive `aria-label` tags with `aria-hidden="true"` applied to the inner icon element to prevent confusion with screen readers.
+**Action:** When creating forms, ensure primary action buttons use `type="submit"` and the form has `onsubmit="event.preventDefault()"` if using client-side JavaScript. Icon-only elements should strictly have `aria-label` attributes to ensure context.
