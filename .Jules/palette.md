@@ -1,0 +1,3 @@
+## 2026-06-12 - Accessible Icon-Only Buttons
+**Learning:** Icon-only buttons or social login buttons (where the inner element is just an icon text like 'G' or Material Symbols) can be confusing for screen readers if not properly hidden. Setting `aria-hidden="true"` on the internal `<span>` containing the icon/text, while adding a descriptive `aria-label` to the parent `<button>` element, ensures the action is properly announced without unnecessary clutter.
+**Action:** Always add descriptive `aria-label` attributes to `<button>` elements containing only icons or single characters, and explicitly set `aria-hidden="true"` on the internal text/icon spans.
