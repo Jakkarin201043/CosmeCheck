@@ -180,23 +180,23 @@
 <h2 class="font-headline-md text-headline-md text-on-surface mb-1">Welcome back</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">Sign in to continue your skincare journey.</p>
 </div>
-<form class="flex flex-col gap-stack-sm">
+<form class="flex flex-col gap-stack-sm" onsubmit="event.preventDefault();">
 <!-- Email Input -->
 <div class="flex flex-col gap-1">
-<label class="font-label-md text-label-md text-on-surface-variant ml-2">Email</label>
+<label for="email" class="font-label-md text-label-md text-on-surface-variant ml-2">Email</label>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">mail</span>
-<input class="w-full bg-surface-container/50 border border-transparent rounded-[16px] py-[16px] pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline/70 focus:bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-300" placeholder="hello@example.com" type="email"/>
+<input class="w-full bg-surface-container/50 border border-transparent rounded-[16px] py-[16px] pl-12 pr-4 font-body-md text-body-md text-on-surface placeholder:text-outline/70 focus:bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-300" placeholder="hello@example.com" type="email" id="email" name="email" autocomplete="email" />
 </div>
 </div>
 <!-- Password Input -->
 <div class="flex flex-col gap-1">
-<label class="font-label-md text-label-md text-on-surface-variant ml-2">Password</label>
+<label for="password" class="font-label-md text-label-md text-on-surface-variant ml-2">Password</label>
 <div class="relative">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
-<input class="w-full bg-surface-container/50 border border-transparent rounded-[16px] py-[16px] pl-12 pr-12 font-body-md text-body-md text-on-surface placeholder:text-outline/70 focus:bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-300" placeholder="••••••••" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors" type="button">
-<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+<input class="w-full bg-surface-container/50 border border-transparent rounded-[16px] py-[16px] pl-12 pr-12 font-body-md text-body-md text-on-surface placeholder:text-outline/70 focus:bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all duration-300" placeholder="••••••••" type="password" id="password" name="password" autocomplete="current-password" />
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors" type="button" aria-label="Toggle password visibility">
+<span class="material-symbols-outlined text-[20px]" aria-hidden="true">visibility_off</span>
 </button>
 </div>
 </div>
@@ -204,7 +204,7 @@
 <a class="font-label-md text-label-md text-primary hover:text-primary-fixed-dim transition-colors" href="#">Forgot password?</a>
 </div>
 <!-- Primary Action Button -->
-<button class="w-full mt-4 bg-primary-container text-on-surface font-label-md text-label-md py-[16px] px-[32px] rounded-full hover:bg-primary-fixed hover:shadow-md active:scale-[0.98] transition-all duration-200" type="button">
+<button class="w-full mt-4 bg-primary-container text-on-surface font-label-md text-label-md py-[16px] px-[32px] rounded-full hover:bg-primary-fixed hover:shadow-md active:scale-[0.98] transition-all duration-200" type="submit">
                         Sign In
                     </button>
 </form>
@@ -217,12 +217,12 @@
 <!-- Social Login Row -->
 <div class="flex justify-center gap-gutter">
 <!-- Google -->
-<button class="w-[56px] h-[56px] rounded-full bg-surface-container-lowest flex items-center justify-center shadow-[0px_4px_12px_rgba(0,0,0,0.03)] border border-surface-container hover:bg-surface-container-low active:scale-95 transition-all" type="button">
-<span class="font-label-md text-label-md font-bold text-on-surface text-[18px]">G</span>
+<button class="w-[56px] h-[56px] rounded-full bg-surface-container-lowest flex items-center justify-center shadow-[0px_4px_12px_rgba(0,0,0,0.03)] border border-surface-container hover:bg-surface-container-low active:scale-95 transition-all" type="button" aria-label="Sign in with Google">
+<span class="font-label-md text-label-md font-bold text-on-surface text-[18px]" aria-hidden="true">G</span>
 </button>
 <!-- Apple -->
-<button class="w-[56px] h-[56px] rounded-full bg-surface-container-lowest flex items-center justify-center shadow-[0px_4px_12px_rgba(0,0,0,0.03)] border border-surface-container hover:bg-surface-container-low active:scale-95 transition-all" type="button">
-<span class="material-symbols-outlined text-on-surface text-[24px]" style="font-variation-settings: 'FILL' 1;">ios</span>
+<button class="w-[56px] h-[56px] rounded-full bg-surface-container-lowest flex items-center justify-center shadow-[0px_4px_12px_rgba(0,0,0,0.03)] border border-surface-container hover:bg-surface-container-low active:scale-95 transition-all" type="button" aria-label="Sign in with Apple">
+<span class="material-symbols-outlined text-on-surface text-[24px]" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">ios</span>
 </button>
 </div>
 </div>
